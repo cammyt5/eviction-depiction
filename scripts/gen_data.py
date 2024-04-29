@@ -1,3 +1,4 @@
+import json
 import os
 import pandas as pd
 import plotly.express as px
@@ -107,3 +108,36 @@ fig5 = px.scatter(data, x="eviction_rate", y="median_flip_horizon", trendline="o
 
 with open(f"{static_dir}/fig5.json", "w") as f:
     f.write(fig5.to_json() or "")
+
+### Map
+with open(f"{scripts_dir}/evictions_with_geo.geojson") as f:
+    neighborhoods = json.load(f)
+
+# little hack to get eviction_rate in geojson
+for feature in neighborhoods["features"]:
+    if feature["properties"]["pop"] > 0:
+        feature["properties"]["eviction_rate"] = (
+            feature["properties"]["2023_eviction"]
+            + feature["properties"]["2022_eviction"]
+            + feature["properties"]["2021_eviction"]
+            + feature["properties"]["2020_eviction"]
+        ) / (feature["properties"]["pop"] * (1 - feature["properties"]["own_occ_rate"]))
+
+fig = px.choropleth_mapbox(
+    data,
+    geojson=neighborhoods,
+    locations="GEOID",
+    featureidkey="properties.GEOID",
+    color="eviction_rate",
+    color_continuous_scale="Viridis",
+    range_color=(0, 0.2),
+    mapbox_style="carto-positron",
+    zoom=11,
+    center={"lat": 42.3016909, "lon": -71.1010779},
+    opacity=0.5,
+    labels={"unemp": "unemployment rate"},
+)
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+
+with open(f"{static_dir}/map.json", "w") as f:
+    f.write(fig.to_json() or "")

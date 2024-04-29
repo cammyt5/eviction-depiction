@@ -13,11 +13,13 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/d3": "^7.4.3",
-                "svelte": "^4.2.7",
+		"svelte": "^4.2.7",
 		"vite": "^5.0.3"
 	},
 	"type": "module",
 	"dependencies": {
-		"d3": "^7.9.0"
+		"d3": "^7.9.0",
+		"mapbox-gl": "^3.3.0",
+		"svelte-range-slider-pips": "^2.3.1"
 	}
 }

@@ -1,5 +1,8 @@
 <script>
     import Plot from "$lib/plot.svelte";
+    import RangeSlider from "svelte-range-slider-pips";
+
+  let values = [0, .2];
 </script>
 
 <style>
@@ -113,7 +116,15 @@
 
     <p>These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
 
-    <div class="viz-placeholder">buy rate vs. evicions map w/ slider</div>
+    <Plot fname="map.json" filter={(fig) => {
+        console.log(fig);
+        if (fig) {
+            const features = fig.data[0].geojson.features;
+            fig.data[0].geojson.features = features.filter(feature => feature.properties.eviction_rate < values[1] && feature.properties.eviction_rate > values[0]);
+        }
+        return fig;
+    }}/>
+    <RangeSlider min={0} max={.2} step={.2/100} pipstep={.2} range pushy pips float first=label last=label bind:values={values} />
 
     <hr class="blue"/>
     <h3>Not All Corporations are Equal</h3>

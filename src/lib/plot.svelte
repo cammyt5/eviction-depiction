@@ -8,14 +8,22 @@
   import { onMount } from "svelte";
 
     export let fname = "";
+    export let filter = (fig) => fig;
 
-    let fig = [];
+    let fig, filteredFig = [];
+    let plotDiv, plotly;
 
   onMount(async () => {
     fig = await d3.json(fname);
-    let plotDiv = document.getElementById(fname);				
-    Plotly.newPlot(plotDiv, fig.data, fig.layout, {showSendToCloud:false}); 
+    plotDiv = document.getElementById(fname);				
+      plotly = Plotly;
   });
+
+    $: filteredFig = filter(fig);
+
+    $: {
+        plotly?.newPlot(plotDiv, filteredFig.data, filteredFig.layout, {showSendToCloud:false}); 
+    }
 </script>
 
 <div id={fname}></div>
