@@ -129,7 +129,6 @@
     <p>These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
 
     <Plot fname="map.json" filter={(fig) => {
-        console.log(fig);
         if (fig) {
             const features = fig.data[0].geojson.features;
             fig.data[0].geojson.features = features.filter(feature => feature.properties.eviction_rate < values[1] && feature.properties.eviction_rate > values[0]);
@@ -158,8 +157,7 @@
 
     <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
 
-    <img src="img/flipping.JPG" alt="flip horizon vs. eviction rate">
-    placeholder - final version will have tooltips
+    <Plot fname="fig5.json" />
  
     <hr class="yellow"/>
     <h3>Conclusion</h3>
