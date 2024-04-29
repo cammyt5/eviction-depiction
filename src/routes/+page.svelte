@@ -3,6 +3,7 @@
     import RangeSlider from "svelte-range-slider-pips";
 
   let values = [0, .2];
+  let investment = [0];
 </script>
 
 <style>
@@ -150,8 +151,10 @@
 
     <p>Alternatively, we can break down corporate purchases by investor "magnitude" and see that areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
 
-    <img src="img/size.JPG" style="width: 100%" alt="investment magnitudes vs. eviction rate">
-    placeholder - final version will allow user to select investment magnitude and see corresponding graph
+    {#key investment}
+    <Plot fname={["fig4a.json", "fig4b.json", "fig4c.json", "fig4d.json", "fig4e.json"][investment[0]]} />
+    {/key}
+    <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
 
     <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
 

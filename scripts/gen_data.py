@@ -95,10 +95,19 @@ data["institutional_investor_buy_rate"] = (
     data["sum_institutional_investor"] / data["total_investors"]
 )
 
-fig4 = px.scatter(data, x="eviction_rate", y="bnk_buy_rate", trendline="ols")
+fig4s = [
+    px.scatter(data, x="eviction_rate", y="non_investor_buy_rate", trendline="ols"),
+    px.scatter(data, x="eviction_rate", y="small_investor_buy_rate", trendline="ols"),
+    px.scatter(data, x="eviction_rate", y="medium_investor_buy_rate", trendline="ols"),
+    px.scatter(data, x="eviction_rate", y="large_investor_buy_rate", trendline="ols"),
+    px.scatter(
+        data, x="eviction_rate", y="institutional_investor_buy_rate", trendline="ols"
+    ),
+]
 
-with open(f"{static_dir}/fig4.json", "w") as f:
-    f.write(fig4.to_json() or "")
+for i, fig in enumerate(fig4s):
+    with open(f"{static_dir}/fig4{chr(ord('a') + i)}.json", "w") as f:
+        f.write(fig.to_json() or "")
 
 
 ### Plot 5
