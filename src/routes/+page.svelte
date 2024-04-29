@@ -128,12 +128,10 @@
 
     <p>These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
 
-    <Plot fname="map.json" filter={(fig) => {
-        if (fig) {
-            const features = fig.data[0].geojson.features;
-            fig.data[0].geojson.features = features.filter(feature => feature.properties.eviction_rate < values[1] && feature.properties.eviction_rate > values[0]);
+    <Plot fname="map.json" filter={(data, original) => {
+        if (data && data.length > 0) {
+            data[0].geojson.features = original[0].geojson.features.filter(feature => feature.properties.eviction_rate < values[1] && feature.properties.eviction_rate > values[0]);
         }
-        return fig;
     }}/>
     <RangeSlider min={0} max={.2} step={.2/100} pipstep={.2} range pushy pips float first=label last=label bind:values={values} />
 
