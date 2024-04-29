@@ -1,7 +1,3 @@
-<svelte:head>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js" type="text/javascript"></script>
-</svelte:head>
-
 <script>
   import * as d3 from "d3";
 
@@ -17,6 +13,7 @@
     fig = await d3.json(fname);
     plotDiv = document.getElementById(fname);				
       originalData = JSON.parse(JSON.stringify(fig.data));
+      const Plotly = await import("plotly.js-dist-min");
       Plotly.newPlot(plotDiv, fig.data, fig.layout, {showSendToCloud:false});
       plotly = Plotly;
   });

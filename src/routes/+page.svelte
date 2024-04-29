@@ -2,8 +2,8 @@
     import Plot from "$lib/plot.svelte";
     import RangeSlider from "svelte-range-slider-pips";
 
-  let values = [0, .2];
-  let investment = [0];
+    let values = [0, .2];
+    let investment = [0];
 </script>
 
 <style>
