@@ -15,6 +15,11 @@
         text-align: center;
     }
 
+    p {
+        font-size: 110%;
+        line-height: 140%;
+    }
+
     p.names {
         text-align: center;
         padding-bottom: 15px;
@@ -59,6 +64,13 @@
         height: 25em;
         background-color: gray;
     }
+
+    img {
+        width: 60%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 </style>
 
 <body>
@@ -69,7 +81,14 @@
     <hr class="yellow"/><hr class="blue"/>
 
     <h3>Background: Corporate Ownership on the Rise</h3>
-    <p></p>
+    <img src="img/intro1.JPG" alt="Boston home ownership rate over time">
+    <p>In the bustling streets of Boston, a city known for its rich history and vibrant culture, a quiet yet seismic shift has been occurring in the realm of housing. Over the past decade, the landscape of homeownership has undergone a remarkable transformation, with fewer Bostonians finding themselves holding the keys to their own abode. The quintessential American dream of owning a home, once within reach for many, now seems to be slipping through the fingers of an increasing number of residents.</p>
+
+    <img src="img/intro2.JPG" alt="Boston eviction rate maps over time">
+    <p>Yet, amidst this backdrop of corporate expansion, a curious trend emerges from our final visualization—a tale of two maps depicting the average annual eviction rates of Boston in 2014 versus 2023. Contrary to expectations, the eviction rate has notably declined, prompting us to pause and ponder: What role, if any, do these corporate entities play in this unexpected narrative of diminishing evictions?</p>
+
+    <img src="img/intro3.JPG" alt="Boston corporate ownership ownership rate over time">
+    <p>To shed light on this phenomenon, we turn our attention to the dynamics of renting, particularly in the realm of corporate landlordship. With the rise of corporate entities dominating the rental market, questions emerge regarding the impact of this shift on housing stability and community well-being. Have these corporate giants reshaped the fabric of Boston's neighborhoods, or are they merely responding to broader societal trends?</p>
 
     <hr class="yellow"/>
     <h3>Corporate Ownership ≠ Evictions</h3>
@@ -90,7 +109,17 @@
 
     <hr class="blue"/>
     <h3>Not All Corporations are Equal</h3>
-    <p></p>
+    <p>The term "corporate ownership" is an umbrella that covers a wide range of ownership scenarios: big banks, large companies, family businesses, live-in landlords, and even some cases of government ownership. As we consider each corporation type individually, how does the corrolation to eviction rates vary?</p>
+
+    <div class="viz-placeholder">small multiples of corporation types - w/ hover that syncs between all 6 - make sure that axes are the same across all</div>
+
+    <p>Alternatively, we can break down corporate purchases by investor "magnitude" and see that areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
+
+    <div class="viz-placeholder">small multiples of corporation sizes w/ slider that allows user to toggle which viz appears</div>
+
+    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
+
+    <div class="viz-placeholder">flip horizon</div>
 
     <hr class="yellow"/>
     <h3>Conclusion</h3>
