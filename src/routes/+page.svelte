@@ -78,6 +78,22 @@
         margin-left: auto;
         margin-right: auto;
     }
+
+    .small-multiples-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .small-multiple {
+        flex: 0 0 calc(50% - 10px); /* 50% width with some spacing */
+        margin: 5px; /* Adjust spacing between items */
+    }
+
+    .small-multiple-title {
+        text-align: center;
+        font: 130% bold;
+        font-family: sans-serif;
+    }
 </style>
 
 <body>
@@ -104,13 +120,9 @@
         
     <p>The natural first step is to compare the <em>corporate ownership rate</em> to the <em>eviction rate</em> in each census tracts. However, the resulting graph does demonstrate any obvious corrolation:</p>
 
-    <div class="viz-placeholder">ownership rate vs. evictions scatterplot</div>
-
     <Plot fname="fig1.json" />
 
     <p>That's because we're comparing apples to oranges: evictions happen at a distinct point in time, while the corporate ownership rate is the result of decades of compounded investment in an area. A better measure to compare against is the <em>corporate buy rate</em>, or the percentage of properties purchased by a business:</p>
-
-    <div class="viz-placeholder">buy rate vs. evicions scatterplot</div>
 
     <Plot fname="fig2.json" />
 
@@ -130,25 +142,27 @@
     <h3>Not All Corporations are Equal</h3>
     <p>The term "corporate ownership" is an umbrella that covers a wide range of ownership scenarios: big banks, large companies, family businesses, live-in landlords, and even some cases of government ownership. As we consider each corporation type individually, how does the corrolation to eviction rates vary?</p>
 
-    <div class="viz-placeholder">small multiples of corporation types - w/ hover that syncs between all 6 - make sure that axes are the same across all</div>
+    <div class="small-multiples-wrapper">
+        <div class="small-multiple"><p class="small-multiple-title">LLCs</p><Plot fname="fig3a.json" /></div>
+        <div class="small-multiple"><p class="small-multiple-title">Government</p><Plot fname="fig3b.json" /></div>
+        <div class="small-multiple"><p class="small-multiple-title">Government-Sponsored Enterprises</p><Plot fname="fig3c.json" /></div>
+        <div class="small-multiple"><p class="small-multiple-title">Trusts</p><Plot fname="fig3d.json" /></div>
+        <div class="small-multiple"><p class="small-multiple-title">Businesses</p><Plot fname="fig3e.json" /></div>
+        <div class="small-multiple"><p class="small-multiple-title">Banks</p><Plot fname="fig3f.json" /></div>
+    </div>
 
     <p>Alternatively, we can break down corporate purchases by investor "magnitude" and see that areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
 
-    <div class="viz-placeholder">small multiples of corporation sizes w/ slider that allows user to toggle which viz appears</div>
+    <img src="img/size.JPG" style="width: 100%" alt="investment magnitudes vs. eviction rate">
+    placeholder - final version will allow user to select investment magnitude and see corresponding graph
 
     <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
 
-    <div class="viz-placeholder">flip horizon</div>
-
+    <img src="img/flipping.JPG" alt="flip horizon vs. eviction rate">
+    placeholder - final version will have tooltips
+ 
     <hr class="yellow"/>
     <h3>Conclusion</h3>
     <p>Corporate ownership is part of the complex landscape of housing in Boston. When a higher percentage of rental properties are bought by corporations in a neighborhood, that neighborhood is more likely to have a high rate of evictions. However, these corporations are not all made equal: specifically, when there are more institutional investors, businesses making large investments, and house-flippers in a neighborhood, the eviction rate is more likely to be high. Small investors and non-investors are not tied tp evictions in the same way.</p>
-
-    <Plot fname="fig3a.json" />
-    <Plot fname="fig3b.json" />
-    <Plot fname="fig3c.json" />
-    <Plot fname="fig3d.json" />
-    <Plot fname="fig3e.json" />
-    <Plot fname="fig3f.json" />
 
 </body>
