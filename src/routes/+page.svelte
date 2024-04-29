@@ -1,3 +1,10 @@
+<script>
+    import Plot from "$lib/plot.svelte";
+</script>
+
+<h1>Welcome to SvelteKit</h1>
+<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+
 <style>
     body {
         max-width: 100ch;
@@ -99,9 +106,13 @@
 
     <div class="viz-placeholder">ownership rate vs. evictions scatterplot</div>
 
+    <Plot fname="fig1.json" />
+
     <p>That's because we're comparing apples to oranges: evictions happen at a distinct point in time, while the corporate ownership rate is the result of decades of compounded investment in an area. A better measure to compare against is the <em>corporate buy rate</em>, or the percentage of properties purchased by a business:</p>
 
     <div class="viz-placeholder">buy rate vs. evicions scatterplot</div>
+
+    <Plot fname="fig2.json" />
 
     <p>These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
 
@@ -125,7 +136,11 @@
     <h3>Conclusion</h3>
     <p></p>
 
+    <Plot fname="fig3a.json" />
+    <Plot fname="fig3b.json" />
+    <Plot fname="fig3c.json" />
+    <Plot fname="fig3d.json" />
+    <Plot fname="fig3e.json" />
+    <Plot fname="fig3f.json" />
 
 </body>
-
-
