@@ -22,7 +22,17 @@ data["eviction_rate"] = (
 ) / (data["pop"] * (1 - data["own_occ_rate"]))
 
 
-fig1 = px.scatter(data, x="eviction_rate", y="corp_own_rate", trendline="ols")
+fig1 = px.scatter(
+    data,
+    y="eviction_rate",
+    x="corp_own_rate",
+    trendline="ols",
+    title="Corporate Ownership Rate vs Eviction Rate",
+    labels={
+        "eviction_rate": "Eviction Rate (%)",
+        "corp_own_rate": "Corporate Ownership Rate (%)",
+    },
+)
 with open(f"{static_dir}/fig1.json", "w") as f:
     f.write(fig1.to_json() or "")
 
@@ -39,7 +49,17 @@ data["corp_buy_rate"] = (
     + data["buyer_trst_ind_sum"]
 ) / data["num_sales_transactions"]
 
-fig2 = px.scatter(data, x="eviction_rate", y="corp_buy_rate", trendline="ols")
+fig2 = px.scatter(
+    data,
+    y="eviction_rate",
+    x="corp_buy_rate",
+    trendline="ols",
+    title="Corporate Buy Rate vs Eviction Rate",
+    labels={
+        "eviction_rate": "Eviction Rate (%)",
+        "corp_buy_rate": "Corporate Buy Rate (%)",
+    },
+)
 with open(f"{static_dir}/fig2.json", "w") as f:
     f.write(fig2.to_json() or "")
 
@@ -60,12 +80,24 @@ data["bus_buy_rate"] = data["buyer_bus_ind_sum"] / data["num_sales_transactions"
 data["bnk_buy_rate"] = data["buyer_bnk_ind_sum"] / data["num_sales_transactions"]
 
 fig3s = [
-    px.scatter(data, x="eviction_rate", y="llc_buy_rate", trendline="ols"),
-    px.scatter(data, x="eviction_rate", y="gov_buy_rate", trendline="ols"),
-    px.scatter(data, x="eviction_rate", y="gse_buy_rate", trendline="ols"),
-    px.scatter(data, x="eviction_rate", y="trst_buy_rate", trendline="ols"),
-    px.scatter(data, x="eviction_rate", y="bus_buy_rate", trendline="ols"),
-    px.scatter(data, x="eviction_rate", y="bnk_buy_rate", trendline="ols"),
+    px.scatter(
+        data,
+        y="eviction_rate",
+        x=col,
+        trendline="ols",
+        labels={
+            "eviction_rate": "Eviction Rate (%)",
+            col: f"Investment Rate (%)",
+        },
+    )
+    for col in [
+        "llc_buy_rate",
+        "gov_buy_rate",
+        "gse_buy_rate",
+        "trst_buy_rate",
+        "bus_buy_rate",
+        "bnk_buy_rate",
+    ]
 ]
 
 for i, fig in enumerate(fig3s):
@@ -96,13 +128,24 @@ data["institutional_investor_buy_rate"] = (
 )
 
 fig4s = [
-    px.scatter(data, x="eviction_rate", y="non_investor_buy_rate", trendline="ols"),
-    px.scatter(data, x="eviction_rate", y="small_investor_buy_rate", trendline="ols"),
-    px.scatter(data, x="eviction_rate", y="medium_investor_buy_rate", trendline="ols"),
-    px.scatter(data, x="eviction_rate", y="large_investor_buy_rate", trendline="ols"),
     px.scatter(
-        data, x="eviction_rate", y="institutional_investor_buy_rate", trendline="ols"
-    ),
+        data,
+        y="eviction_rate",
+        x=col,
+        trendline="ols",
+        title=f"{col_title} vs Eviction Rate",
+        labels={
+            "eviction_rate": "Eviction Rate (%)",
+            col: f"% {col_title}",
+        },
+    )
+    for col, col_title in [
+        ("non_investor_buy_rate", "Non Investors"),
+        ("small_investor_buy_rate", "Small Investors"),
+        ("medium_investor_buy_rate", "Medium Investors"),
+        ("large_investor_buy_rate", "Large Investors"),
+        ("institutional_investor_buy_rate", "Institutional Investors"),
+    ]
 ]
 
 for i, fig in enumerate(fig4s):
@@ -113,7 +156,18 @@ for i, fig in enumerate(fig4s):
 ### Plot 5
 # Eviction Rate vs Median Flip Horizon [dot w trendline]
 
-fig5 = px.scatter(data, x="eviction_rate", y="median_flip_horizon", trendline="ols")
+fig5 = px.scatter(
+    data,
+    y="eviction_rate",
+    x="median_flip_horizon",
+    trendline="ols",
+    title="Median Filp Horizon vs Eviction Rate",
+    labels={
+        "eviction_rate": "Eviction Rate (%)",
+        "median_flip_horizon": "Median Flip Horizon (Months)",
+    },
+)
+fig5.update_xaxes(tickformat=".2s")
 
 with open(f"{static_dir}/fig5.json", "w") as f:
     f.write(fig5.to_json() or "")
