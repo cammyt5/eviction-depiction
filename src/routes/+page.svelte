@@ -2,6 +2,7 @@
     import Plot from "$lib/plot.svelte";
     import RangeSlider from "svelte-range-slider-pips";
     import DataTable from "../lib/dataTable.svelte";
+    import ScrollyBarChart from "../lib/scrollyBarChart.svelte";
     import { homeOwnershipData } from "../data/tables/homeOwnership";
     let values = [0, .2];
     let investment = [0];
@@ -100,6 +101,7 @@
 
 <body>
     <DataTable data={homeOwnershipData} />
+    <ScrollyBarChart />
     <hr class="blue"/><hr class="yellow"/>
     <h1>The LLC Next Door</h1>
     <h2><em>An analysis of corporate housing ownership (by corporation type) <br/>impacting eviction rates in Boston</em></h2>
