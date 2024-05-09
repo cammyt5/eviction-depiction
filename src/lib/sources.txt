@@ -4,3 +4,4 @@ Homeownership Mass: https://www.urban.org/policy-centers/housing-finance-policy-
 median renter income: https://www.census.gov/library/stories/2023/06/owning-or-renting-the-american-dream.html#:~:text=A%20bigger%20share%20of%20homeowners,%2478%2C000%20compared%20to%20renters'%20%2441%2C000.
 Boston rent: https://www.census.gov/quickfacts/fact/table/bostoncitymassachusetts/HSG860222#HSG860222
 National rent: https://www.census.gov/quickfacts/fact/table/US/HSG860222#HSG860222
+Suffolk Homeownership: https://fred.stlouisfed.org/series/HOWNRATEACS025025
