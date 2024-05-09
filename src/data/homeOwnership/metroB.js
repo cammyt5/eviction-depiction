@@ -1,4 +1,4 @@
-let metroBostonData = {
+export const metroBostonData = {
     "objects": [
         {"year": 1986, "rate": 55.9},
         {"year": 1987, "rate": 56.3},

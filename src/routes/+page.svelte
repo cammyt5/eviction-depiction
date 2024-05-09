@@ -3,6 +3,7 @@
     import RangeSlider from "svelte-range-slider-pips";
     import DataTable from "../lib/dataTable.svelte";
     import ScrollyBarChart from "../lib/scrollyBarChart.svelte";
+    import HoLineChart from "../lib/hoLineChart.svelte";
     import { homeOwnershipData } from "../data/tables/homeOwnership";
     let values = [0, .2];
     let investment = [0];

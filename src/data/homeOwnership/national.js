@@ -1,4 +1,4 @@
-let nationalData = {
+export const nationalData = {
     "objects": [
         {"year": 1986, "rate": 63.6},
         {"year": 1987, "rate": 63.8},
