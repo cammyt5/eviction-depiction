@@ -100,7 +100,6 @@
 </style>
 
 <body>
-    <DataTable data={homeOwnershipData} />
     <hr class="blue"/><hr class="yellow"/>
     <h1>The LLC Next Door</h1>
     <h2><em>An analysis of corporate housing ownership (by corporation type) <br/>impacting eviction rates in Boston</em></h2>
@@ -110,7 +109,7 @@
     <h3>Background: Corporate Ownership on the Rise</h3>
     <img src="img/intro1.JPG" alt="Boston home ownership rate over time">
     <p>In the bustling streets of Boston, a city known for its rich history and vibrant culture, a quiet yet seismic shift has been occurring in the realm of housing. Over the past decade, the landscape of homeownership has undergone a remarkable transformation, with fewer Bostonians finding themselves holding the keys to their own abode. The quintessential American dream of owning a home, once within reach for many, now seems to be slipping through the fingers of an increasing number of residents.</p>
-
+    <DataTable data={homeOwnershipData} />
     <img src="img/intro2.JPG" alt="Boston eviction rate maps over time">
     <p>Yet, amidst this backdrop of corporate expansion, a curious trend emerges from our final visualization—a tale of two maps depicting the average annual eviction rates of Boston in 2014 versus 2023. Contrary to expectations, the eviction rate has notably declined, prompting us to pause and ponder: What role, if any, do these corporate entities play in this unexpected narrative of diminishing evictions?</p>
 
