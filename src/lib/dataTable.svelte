@@ -2,7 +2,6 @@
     import * as d3 from "d3";
 
     export let data;
-    console.log(data);
 
     data.rows.forEach((row, index) => {
         row.rank = index + 1;
