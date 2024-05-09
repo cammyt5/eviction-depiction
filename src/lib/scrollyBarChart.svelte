@@ -110,7 +110,8 @@
     }
 
     function addRentLine(data, svg) {
-        svg.append("line")
+        const lineGroup = svg.append("g");
+        lineGroup.append("line")
             .attr("x1", chartParams.marginLeft)
             .attr("y1", chartParams.yScale(data.medianAnnualRent))
             .attr("x2", chartParams.width - chartParams.marginRight)
@@ -121,6 +122,8 @@
     function addBar(data, svg, labels) {
         svg.selectAll("rect").remove();
         svg.selectAll(".barText").remove();
+        svg.selectAll(".xAxisLabel").remove(); 
+
         const x = chartParams.xScale.domain([...chartParams.xScale.domain(), ...labels]);
         const y = chartParams.yScale;
 
@@ -140,72 +143,16 @@
                 .attr("y", y(currentData.value) - 5)
                 .attr("text-anchor", "middle")
                 .text(currentData.value);
+
+            svg.append("text")
+                .attr("class", "xAxisLabel")
+                .attr("x", x(label) + x.bandwidth() / 2)
+                .attr("y", chartParams.height - 5)
+                .attr("text-anchor", "middle")
+                .text(label);
         });
-
+        addRentLine(data, svg);
     }
-
-    // function createBarChart(data, containerId) {
-    //     const width = 400;
-    //     const height = 300;
-    //     const marginTop = 30;
-    //     const marginRight = 20;
-    //     const marginBottom = 30;
-    //     const marginLeft = 60;
-        
-    //     d3.select(containerId).select("svg").remove();
-
-    //     const svg = d3.select(containerId)
-    //         .append("svg")
-    //         .attr("width", width)
-    //         .attr("height", height);
-
-    //     const x = d3.scaleBand()
-    //         .domain(data.objects.map(d => d.label))
-    //         .range([marginLeft, width - marginRight])
-    //         .padding(0.1);
-
-    //     const y = d3.scaleLinear()
-    //         .domain([0, 111000])
-    //         .range([height - marginBottom, marginTop]);
-
-    //     svg.selectAll("rect")
-    //         .data(data.objects)
-    //         .enter()
-    //         .append("rect")
-    //         .attr("x", d => x(d.label))
-    //         .attr("y", d => y(d.value))
-    //         .attr("width", x.bandwidth())
-    //         .attr("height", d => height - marginBottom - y(d.value))
-    //         .attr("fill", "steelblue");
-
-    //     svg.selectAll(".barText")
-    //         .data(data.objects)
-    //         .enter()
-    //         .append("text")
-    //         .attr("class", "barText")
-    //         .attr("x", d => x(d.label) + x.bandwidth() / 2)
-    //         .attr("y", d => y(d.value) - 5)
-    //         .attr("text-anchor", "middle")
-    //         .text(d => d.value); // Display the amount written out above all bars
-
-    //     svg.append("line")
-    //         .attr("x1", marginLeft)
-    //         .attr("y1", y(data.medianAnnualRent))
-    //         .attr("x2", width - marginRight)
-    //         .attr("y2", y(data.medianAnnualRent))
-    //         .style("stroke", "black")
-    //         .style("stroke-dasharray", "3,3");
-
-    //     svg.append("g")
-    //         .attr("transform", `translate(0,${height - marginBottom})`)
-    //         .call(d3.axisBottom(x));
-
-    //     svg.append("g")
-    //         .attr("transform", `translate(${marginLeft},0)`)
-    //         .call(d3.axisLeft(y));
-
-    //     return svg;
-    // }
 
     onMount(() => {
         createBarChart(nationalData, "#nationalChart");
@@ -256,5 +203,3 @@
     <div id="bostonChart"></div>
 </Scrolly>
 
-<!-- <div id="nationalChart"></div>
-<div id="bostonChart"></div> -->
