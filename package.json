@@ -21,6 +21,7 @@
 		"d3": "^7.9.0",
 		"mapbox-gl": "^3.3.0",
 		"plotly.js-dist-min": "^2.32.0",
-		"svelte-range-slider-pips": "^2.3.1"
+		"svelte-range-slider-pips": "^2.3.1",
+		"svelte-scrolly": "^0.0.4"
 	}
 }

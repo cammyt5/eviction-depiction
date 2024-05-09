@@ -1,7 +1,9 @@
 <script>
     import Plot from "$lib/plot.svelte";
     import RangeSlider from "svelte-range-slider-pips";
-
+    import DataTable from "../lib/dataTable.svelte";
+    import ScrollyBarChart from "../lib/scrollyBarChart.svelte";
+    import { homeOwnershipData } from "../data/tables/homeOwnership";
     let values = [0, .2];
     let investment = [0];
 </script>
@@ -98,6 +100,7 @@
 </style>
 
 <body>
+    <DataTable data={homeOwnershipData} />
     <hr class="blue"/><hr class="yellow"/>
     <h1>The LLC Next Door</h1>
     <h2><em>An analysis of corporate housing ownership (by corporation type) <br/>impacting eviction rates in Boston</em></h2>
@@ -119,6 +122,7 @@
     <p>Let's investigate the link between corporate ownership and evictions in Boston using a dataset of Boston evictions between 2020-2023 on the <span class="text-tooltip" data-tooltip="Roughly neighborhood-sized chunks of the city.">census tract level</span>.</p>
     <p>First, we must define a few terms: in our analysis, we define the <em>eviction rate</em> in a given census tract to be the <em>annual number of evictions filed</em> divided by the <span class="text-tooltip" data-tooltip="Determined by multiplying the census tract population by one minus the tract's owner-occupancy rate."><em>renter population</em></span>.
         
+    <ScrollyBarChart />
     <p>The natural first step is to compare the <em>corporate ownership rate</em> to the <em>eviction rate</em> in each census tracts. However, the resulting graph does demonstrate any obvious corrolation:</p>
 
     <Plot fname="fig1.json" />
