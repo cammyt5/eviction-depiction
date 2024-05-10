@@ -77,17 +77,24 @@
   <!-- Table header -->
   <thead>
     <tr>
-      <th />
+      <th id="rank" />
       {#each columnTitles as title}
         <th
+          style="width: 31%;"
           class:selected={sortByColumn === title}
           on:click={() => handleSort(title)}
         >
-          {title}
+          <div class="table-header">
+            <span>
+              {title}
+            </span>
 
-          {#if sortByColumn === title}
-            {sortDirection === "asc" ? "▲" : "▼"}
-          {/if}
+            <span>
+              {#if sortByColumn === title}
+                {sortDirection === "asc" ? "▲" : "▼"}
+              {/if}
+            </span>
+          </div>
         </th>
       {/each}
     </tr>
@@ -139,7 +146,6 @@
   }
 
   th {
-    text-align: left;
     padding: 8px;
   }
   th:hover {
@@ -148,6 +154,16 @@
   }
   th.selected {
     background-color: #f0f0f0; /* Change the background color for the selected column header */
+  }
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #rank:hover {
+    box-shadow: none;
+    cursor: default;
   }
 
   td {
