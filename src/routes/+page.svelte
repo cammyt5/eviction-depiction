@@ -2,6 +2,7 @@
     import Plot from "$lib/plot.svelte";
     import RangeSlider from "svelte-range-slider-pips";
     import DataTable from "../lib/dataTable.svelte";
+    import HoLineChart from "../lib/hoLineChart.svelte"
     import ScrollyBarChart from "../lib/scrollyBarChart.svelte";
     import { homeOwnershipData } from "../data/tables/homeOwnership";
     let values = [0, .2];
@@ -166,5 +167,5 @@
     <hr class="yellow"/>
     <h3>Conclusion</h3>
     <p>Corporate ownership is part of the complex landscape of housing in Boston. When a higher percentage of rental properties are bought by corporations in a neighborhood, that neighborhood is more likely to have a high rate of evictions. However, these corporations are not all made equal: specifically, when there are more institutional investors, businesses making large investments, and house-flippers in a neighborhood, the eviction rate is more likely to be high. Small investors and non-investors are not tied tp evictions in the same way.</p>
-
+    <HoLineChart />
 </body>
