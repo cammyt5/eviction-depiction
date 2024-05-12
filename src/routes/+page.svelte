@@ -4,6 +4,7 @@
     import DataTable from "../lib/dataTable.svelte";
     import ScrollyBarChart from "../lib/scrollyBarChart.svelte";
     import { homeOwnershipData } from "../data/tables/homeOwnership";
+    import EvictionDashboard from "../lib/evictionDashboard.svelte";
 
     let values = [0, .2];
 
@@ -257,6 +258,7 @@
         {/each}
         </div>
     </div>
+    <EvictionDashboard selectedValue={selectorValue}/>
 
     
 
