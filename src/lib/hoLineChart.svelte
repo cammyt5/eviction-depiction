@@ -8,7 +8,7 @@
 
   let div;
   const parseYear = d3.timeParse("%Y");
-  const data = [
+  let data = [
     ["Metro Boston", metroBostonData.objects],
     ["Suffolk County", suffolkData.objects],
     ["National", nationalData.objects],
@@ -20,12 +20,17 @@
     }))
   );
 
+  console.log(data);
+  data = data.filter((value) => value.Year > new Date(2007, 12));
+
+  console.log(data);
+
   $: {
     div?.firstChild?.remove(); // remove old chart, if any
 
     div?.append(
       Plot.plot({
-        style: "overflow: visible; width: 100%; height: 500px;",
+        style: "overflow: visible; width: 100%; height: 500px; font-size: 13px; font-family: 'Times New Roman', Times, serif;",
         grid: true,
         marks: [
           Plot.axisX({ label: "Year" }),
