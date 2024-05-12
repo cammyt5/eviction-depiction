@@ -4,17 +4,31 @@
     import DataTable from "../lib/dataTable.svelte";
     import ScrollyBarChart from "../lib/scrollyBarChart.svelte";
     import { homeOwnershipData } from "../data/tables/homeOwnership";
-    let map2Values = [0, .2]
+
     let values = [0, .2];
 
     let selectorValue = "";
+    const menuOptions = ["Demographics", "Corporations", "Investors"];
+    const optionsToFeatures = {
+        "Demographics": ["majority_black", "majority_hisp", "high_income", "low_income"],
+        "Corporations": ["high_llc_buy_rate", "low_llc_buy_rate", "high_gov_buy_rate", "low_gov_buy_rate", 
+                        "high_gse_buy_rate", "low_gse_buy_rate", "high_trst_buy_rate", "low_trst_buy_rate", 
+                        "high_bus_buy_rate", "low_bus_buy_rate", "high_bnk_buy_rate", "low_bnk_buy_rate"],
+        "Investors": ["high_non_investor_buy_rate", "low_non_investor_buy_rate", 
+                    "high_small_investor_buy_rate", "low_small_investor_buy_rate", 
+                    "high_medium_investor_buy_rate", "low_medium_investor_buy_rate", 
+                    "high_large_investor_buy_rate", "low_large_investor_buy_rate", 
+                    "high_institutional_investor_buy_rate", "low_institutional_investor_buy_rate"],
+    };
+
+
     const featureNameMap = {
         "high_llc_buy_rate": "High LLC Buy Rate",
         "low_llc_buy_rate": "Low LLC Buy Rate",
-        "majority_black": "Majority Black",
-        "majority_hisp": "Majority Hispanic",
-        "high_income": "High Income",
-        "low_income": "Low Income",
+        "majority_black": "Majority Black Population",
+        "majority_hisp": "Majority Hispanic Population",
+        "high_income": "High Median Household Income",
+        "low_income": "Low Median Household Income",
         "high_gov_buy_rate": "High Government Buyer Rate",
         "low_gov_buy_rate": "Low Government Buyer Rate",
         "high_gse_buy_rate": "High Government-Sponsored Enterprise Buyer Rate",
@@ -37,6 +51,14 @@
         "low_institutional_investor_buy_rate": "Low Institutional Investor Buyer Rate"
     };
 
+    let expandedCategory = null;
+
+    function toggleCategory(category) {
+        expandedCategory = expandedCategory === category ? null : category;
+    }
+    function handleFeatureSelect(feature) {
+        selectorValue = feature === selectorValue ? "" : feature;
+    }
 
     let investment = [0];
 </script>
@@ -130,6 +152,52 @@
         font: 130% bold;
         font-family: sans-serif;
     }
+
+    .dropbtn {
+        background-color: #3498db;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Style the dropdown content */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Style the dropdown item */
+    .dropdown-item {
+        padding: 10px;
+    }
+
+    /* Style the option title */
+    .option-title {
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    /* Style the feature links */
+    .dropdown-content a {
+        display: block;
+        padding: 5px 0;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
 </style>
 
 <body>
@@ -170,15 +238,26 @@
             }
         }
     }} />    
-    <label>
-        Show:
-        <select bind:value={selectorValue}>
-            <option value="">All Tracts</option>
-            {#each Object.entries(featureNameMap) as [featureName, correctedName]}
-                <option value={featureName}>{correctedName}</option>
-            {/each}
-        </select>
-    </label>
+    <div class="dropdown">
+        <button class="dropbtn">Show me areas with</button>
+        <div class="dropdown-content">
+        {#each menuOptions as option}
+            <div class="dropdown-item">
+            <span class="option-title" on:click={() => toggleCategory(option)}>
+                {option}
+            </span>
+            {#if expandedCategory === option}
+                {#each optionsToFeatures[option] as feature}
+                <a on:click={() => handleFeatureSelect(feature)}>
+                    {featureNameMap[feature]}
+                </a>
+                {/each}
+            {/if}
+            </div>
+        {/each}
+        </div>
+    </div>
+
     
 
     <Plot fname="fig2.json" />
