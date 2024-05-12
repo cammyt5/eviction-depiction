@@ -29,7 +29,7 @@
         grid: true,
         marks: [
           Plot.axisX({ label: "Year" }),
-          Plot.axisY({ label: "Rate (%)" }),
+          Plot.axisY({ label: "Home Ownership Rate (%)" }),
           Plot.lineY(data, {
             x: "Year",
             y: "Rate",
