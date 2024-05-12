@@ -126,17 +126,17 @@
     <h3>Background: Homeownership & Renting in Boston</h3>
     <p>In the bustling streets of Boston, a city known for its rich history and vibrant culture, a quiet yet seismic shift has been occurring in the realm of housing. Over the past decade, the landscape of homeownership has undergone a remarkable transformation, with fewer Bostonians finding themselves holding the keys to their own home. The quintessential American dream of owning a home is slipping through the fingers of an increasing number of residents.</p>
     <div class="viz"><HoLineChart/></div>
+
     <p>When comparing home ownership rates across US cities, Boston comes in at number 24. The only city where a smaller percentage of residents own their home is New York City.</p>
     <div class="viz"><DataTable data={homeOwnershipData}/></div>
+
     <p style="margin-top: 5em;">To add to the difficulty of living in Boston, renters face a much higher rent burden than the national average. This is especially true for disadvantaged communities, such as black neighborhoods.</p>
-    <div class="viz"><ScrollyBarChart /></div>
-    <img src="img/intro2.JPG" alt="Boston eviction rate maps over time">
-    <p>Yet, amidst this backdrop of corporate expansion, a curious trend emerges from our final visualization—a tale of two maps depicting the average annual eviction rates of Boston in 2014 versus 2023. Contrary to expectations, the eviction rate has notably declined, prompting us to pause and ponder: What role, if any, do these corporate entities play in this unexpected narrative of diminishing evictions?</p>
+    <div class="viz" style="margin-bottom: 0;"><ScrollyBarChart /></div>
 
+    <p>The housing crisis in Boston has developed in tandem with another major phenomenon: the rise in corporate ownership across the city.</p>
     <img src="img/intro3.JPG" alt="Boston corporate ownership ownership rate over time">
-    <p>To shed light on this phenomenon, we turn our attention to the dynamics of renting, particularly in the realm of corporate landlordship. With the rise of corporate entities dominating the rental market, questions emerge regarding the impact of this shift on housing stability and community well-being. Have these corporate giants reshaped the fabric of Boston's neighborhoods, or are they merely responding to broader societal trends?</p>
 
-    
+    <p>The concept of "corporate ownership" calls to mind an image of large, faceless corporation barreling into a neighborhood and evicting long-time residents just to jack up rent to maximize profit. Who are these "corporate owners," really? Do they all behave the same, and are they all bad actors? In the remainder of this article, to examine the impact of corporations on each neighborhood, we will look specifically the corrolation between corporate owners and evictions.</p>
 
     <hr class="yellow"/>
     <h3>Corporate Ownership ≠ Evictions</h3>
@@ -145,46 +145,42 @@
         
     <p>The natural first step is to compare the <em>corporate ownership rate</em> to the <em>eviction rate</em> in each census tracts. However, the resulting graph does demonstrate any obvious corrolation:</p>
 
-    <Plot fname="fig1.json" />
+    <div class="viz"><Plot fname="fig1.json" /></div>
 
     <p>That's because we're comparing apples to oranges: evictions happen at a distinct point in time, while the corporate ownership rate is the result of decades of compounded investment in an area. A better measure to compare against is the <em>corporate buy rate</em>, or the percentage of properties purchased by a business:</p>
 
-    <Plot fname="fig2.json" />
+    <div class="viz"><Plot fname="fig2.json" /></div>
 
     <p>These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
 
-    <Plot fname="map.json" filter={(data, original) => {
-        if (data && data.length > 0) {
-            data[0].geojson.features = original[0].geojson.features.filter(feature => feature.properties.eviction_rate < values[1] && feature.properties.eviction_rate > values[0]);
-        }
-    }}/>
-    <RangeSlider min={0} max={.2} step={.2/100} pipstep={.2} range pushy pips float first=label last=label bind:values={values} />
+    <div class="viz" style="margin-bottom: 6em;">
+        <Plot fname="map.json" filter={(data, original) => {
+            if (data && data.length > 0) {
+                data[0].geojson.features = original[0].geojson.features.filter(feature => feature.properties.eviction_rate < values[1] && feature.properties.eviction_rate > values[0]);
+            }
+        }}/>
+        <RangeSlider min={0} max={.2} step={.2/100} pipstep={.2} range pushy pips float first=label last=label bind:values={values} />
+    </div>
 
     <hr class="blue"/>
     <h3>Not All Corporations are Equal</h3>
     <p>The term "corporate ownership" is an umbrella that covers a wide range of ownership scenarios: big banks, large companies, family businesses, live-in landlords, and even some cases of government ownership. As we consider each corporation type individually, how does the corrolation to eviction rates vary?</p>
+    <p>[DEFINE TYPES, STATE HIGHEST CORROLATION]</p>
 
-    <div class="small-multiples-wrapper">
-        <div class="small-multiple"><p class="small-multiple-title">LLCs</p><Plot fname="fig3a.json" /></div>
-        <div class="small-multiple"><p class="small-multiple-title">Government</p><Plot fname="fig3b.json" /></div>
-        <div class="small-multiple"><p class="small-multiple-title">Government-Sponsored Enterprises</p><Plot fname="fig3c.json" /></div>
-        <div class="small-multiple"><p class="small-multiple-title">Trusts</p><Plot fname="fig3d.json" /></div>
-        <div class="small-multiple"><p class="small-multiple-title">Businesses</p><Plot fname="fig3e.json" /></div>
-        <div class="small-multiple"><p class="small-multiple-title">Banks</p><Plot fname="fig3f.json" /></div>
+    <p>We can break down corporate purchases by investor "magnitude" and see that areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
+
+    <div class="viz" style="margin-bottom: 6em;">
+        <div style="height: 450px; width: 800px;">
+            {#key investment}
+            <Plot fname={["fig4a.json", "fig4b.json", "fig4c.json", "fig4d.json", "fig4e.json"][investment[0]]} />
+            {/key}
+        </div>
+        <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
     </div>
-
-    <p>Alternatively, we can break down corporate purchases by investor "magnitude" and see that areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
-
-    <div style="height: 450px; width: 800px;">
-        {#key investment}
-        <Plot fname={["fig4a.json", "fig4b.json", "fig4c.json", "fig4d.json", "fig4e.json"][investment[0]]} />
-        {/key}
-    </div>
-    <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
 
     <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
 
-    <Plot fname="fig5.json" />
+    <div class="viz"><Plot fname="fig5.json" /></div>
  
     <hr class="yellow"/>
     <h3>Conclusion</h3>
