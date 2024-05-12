@@ -3,9 +3,41 @@
     import RangeSlider from "svelte-range-slider-pips";
     import DataTable from "../lib/dataTable.svelte";
     import ScrollyBarChart from "../lib/scrollyBarChart.svelte";
-    import HoLineChart from "../lib/hoLineChart.svelte";
     import { homeOwnershipData } from "../data/tables/homeOwnership";
+    let map2Values = [0, .2]
     let values = [0, .2];
+
+    let selectorValue = "";
+    const featureNameMap = {
+        "high_llc_buy_rate": "High LLC Buy Rate",
+        "low_llc_buy_rate": "Low LLC Buy Rate",
+        "majority_black": "Majority Black",
+        "majority_hisp": "Majority Hispanic",
+        "high_income": "High Income",
+        "low_income": "Low Income",
+        "high_gov_buy_rate": "High Government Buyer Rate",
+        "low_gov_buy_rate": "Low Government Buyer Rate",
+        "high_gse_buy_rate": "High Government-Sponsored Enterprise Buyer Rate",
+        "low_gse_buy_rate": "Low Government-Sponsored Enterprise Buyer Rate",
+        "high_trst_buy_rate": "High Trust Buyer Rate",
+        "low_trst_buy_rate": "Low Trust Buyer Rate",
+        "high_bus_buy_rate": "High Business Buyer Rate",
+        "low_bus_buy_rate": "Low Business Buyer Rate",
+        "high_bnk_buy_rate": "High Bank Buyer Rate",
+        "low_bnk_buy_rate": "Low Bank Buyer Rate",
+        "high_non_investor_buy_rate": "High Non-Investor Buyer Rate",
+        "low_non_investor_buy_rate": "Low Non-Investor Buyer Rate",
+        "high_small_investor_buy_rate": "High Small Investor Buyer Rate",
+        "low_small_investor_buy_rate": "Low Small Investor Buyer Rate",
+        "high_medium_investor_buy_rate": "High Medium Investor Buyer Rate",
+        "low_medium_investor_buy_rate": "Low Medium Investor Buyer Rate",
+        "high_large_investor_buy_rate": "High Large Investor Buyer Rate",
+        "low_large_investor_buy_rate": "Low Large Investor Buyer Rate",
+        "high_institutional_investor_buy_rate": "High Institutional Investor Buyer Rate",
+        "low_institutional_investor_buy_rate": "Low Institutional Investor Buyer Rate"
+    };
+
+
     let investment = [0];
 </script>
 
@@ -128,6 +160,26 @@
     <Plot fname="fig1.json" />
 
     <p>That's because we're comparing apples to oranges: evictions happen at a distinct point in time, while the corporate ownership rate is the result of decades of compounded investment in an area. A better measure to compare against is the <em>corporate buy rate</em>, or the percentage of properties purchased by a business:</p>
+    <Plot fname="map2.json" filter={(data, original) => {
+        if (data && data.length > 0) {
+            if (selectorValue) {
+                const filteredFeatures = original[0].geojson.features.filter(feature => feature.properties[selectorValue]);
+                data[0].geojson.features = filteredFeatures;
+            } else {
+                data[0].geojson.features = original[0].geojson.features;
+            }
+        }
+    }} />    
+    <label>
+        Show:
+        <select bind:value={selectorValue}>
+            <option value="">All Tracts</option>
+            {#each Object.entries(featureNameMap) as [featureName, correctedName]}
+                <option value={featureName}>{correctedName}</option>
+            {/each}
+        </select>
+    </label>
+    
 
     <Plot fname="fig2.json" />
 
