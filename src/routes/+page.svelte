@@ -177,7 +177,7 @@
  
     <hr class="yellow"/>
     <h3>Conclusion</h3>
-    <p>Corporate ownership is part of the complex landscape of housing in Boston. When a higher percentage of rental properties are bought by corporations in a neighborhood, that neighborhood is more likely to have a high rate of evictions. However, these corporations are not all made equal: specifically, when there are more institutional investors, businesses making large investments, and house-flippers in a neighborhood, the eviction rate is more likely to be high. Small investors and non-investors are not tied tp evictions in the same way.</p>
+    <p>Corporate ownership is part of the complex landscape of housing in Boston. When a higher percentage of rental properties are bought by corporations in a neighborhood, that neighborhood is more likely to have a high rate of evictions. However, these corporations are not all made equal: specifically, when there are more institutional investors, businesses making large investments, and house-flippers in a neighborhood, the eviction rate is more likely to be high. Small investors and non-investors are not tied to evictions in the same way.</p>
 
     <h3>Attribution</h3>
     <p>This project was developed with guidance and feedback from the <a href="https://www.mapc.org/">Metropolitan Area Planning Commission (MAPC)</a>.</p>
