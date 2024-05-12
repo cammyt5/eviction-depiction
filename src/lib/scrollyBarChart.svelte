@@ -44,12 +44,12 @@
         "Renter Household Income in Majority Black Neighborhoods"
     ];
     let narrative = [
-        "The median national rent is $15,216 annually or $1,268/month.",
-        "In Boston, these figures rise to $23,772 in rent annually, or $1,981 monthly.",
+        "The median national rent is $15,216 annually, or $1,268/month.",
+        "In Boston, these figures rise to $23,772 annually, or $1,981/month.",
         "The average renter household earns $41,000 nationally, meaning rent costs 37.1% of earnings.",
-        "In Boston, renter households actually make less at $40,501 annually, meaning rent costs total 58.7% of earnings.",
+        "In Boston, renter households make only $40,501 annually, meaning rent costs 58.7% of earnings.",
         "Homeowner households nationally earn a household income of $78,000.",
-        "In Boston, homeowners earn more, at $102,062.",
+        "In Boston, homeowners earn more, at $102,062 - making the jump from renting to owning even more challenging.",
         "Further, in Boston, renter households in majority black neighborhoods earn, on average, $26,830 annually - meaning they face an even more unaffordable rental market." 
     ]
 
@@ -172,7 +172,7 @@
                 .attr("text-anchor", "end")
                 .attr("x", chartParams.width/2)
                 .attr("y", chartParams.height - 5)
-                .text("Average Income");
+                .text("Average Annual Income");
         });
         addRentLine(data, svg);
     }

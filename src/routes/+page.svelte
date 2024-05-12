@@ -106,6 +106,11 @@
     ul {
         margin: 1px;
     }
+
+    .viz {
+        margin-top: 3em;
+        margin-bottom: 3em;
+    }
 </style>
 
 <body>
@@ -115,17 +120,23 @@
     <p class="names">By Cameron Dougal, Brian Zheng, Aleksandar Jovanovic-Hacon, and Max Katz-Christy</p>
     <hr class="yellow"/><hr class="blue"/>
 
-    <h3>Background: Corporate Ownership on the Rise</h3>
-    <HoLineChart />
-    <p>In the bustling streets of Boston, a city known for its rich history and vibrant culture, a quiet yet seismic shift has been occurring in the realm of housing. Over the past decade, the landscape of homeownership has undergone a remarkable transformation, with fewer Bostonians finding themselves holding the keys to their own abode. The quintessential American dream of owning a home, once within reach for many, now seems to be slipping through the fingers of an increasing number of residents.</p>
-    <DataTable data={homeOwnershipData} />
+    <h3>In this Article</h3>
+    <p>TODO - VERY SHORT SUMMARY OF TAKEAWAYS</p>
+
+    <h3>Background: Homeownership & Renting in Boston</h3>
+    <p>In the bustling streets of Boston, a city known for its rich history and vibrant culture, a quiet yet seismic shift has been occurring in the realm of housing. Over the past decade, the landscape of homeownership has undergone a remarkable transformation, with fewer Bostonians finding themselves holding the keys to their own home. The quintessential American dream of owning a home is slipping through the fingers of an increasing number of residents.</p>
+    <div class="viz"><HoLineChart/></div>
+    <p>When comparing home ownership rates across US cities, Boston comes in at number 24. The only city where a smaller percentage of residents own their home is New York City.</p>
+    <div class="viz"><DataTable data={homeOwnershipData}/></div>
+    <p style="margin-top: 5em;">To add to the difficulty of living in Boston, renters face a much higher rent burden than the national average. This is especially true for disadvantaged communities, such as black neighborhoods.</p>
+    <div class="viz"><ScrollyBarChart /></div>
     <img src="img/intro2.JPG" alt="Boston eviction rate maps over time">
     <p>Yet, amidst this backdrop of corporate expansion, a curious trend emerges from our final visualization—a tale of two maps depicting the average annual eviction rates of Boston in 2014 versus 2023. Contrary to expectations, the eviction rate has notably declined, prompting us to pause and ponder: What role, if any, do these corporate entities play in this unexpected narrative of diminishing evictions?</p>
 
     <img src="img/intro3.JPG" alt="Boston corporate ownership ownership rate over time">
     <p>To shed light on this phenomenon, we turn our attention to the dynamics of renting, particularly in the realm of corporate landlordship. With the rise of corporate entities dominating the rental market, questions emerge regarding the impact of this shift on housing stability and community well-being. Have these corporate giants reshaped the fabric of Boston's neighborhoods, or are they merely responding to broader societal trends?</p>
 
-    <ScrollyBarChart />
+    
 
     <hr class="yellow"/>
     <h3>Corporate Ownership ≠ Evictions</h3>

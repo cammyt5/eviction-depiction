@@ -66,13 +66,6 @@
   }
 </script>
 
-<div id="checkbox">
-  <label>
-    <input type="checkbox" on:change={toggleFullList} />
-    Show full list
-  </label>
-</div>
-
 <table>
   <!-- Table header -->
   <thead>
@@ -133,7 +126,19 @@
   </tbody>
 </table>
 
+<div id="checkbox">
+  <label>
+    <input type="checkbox" on:change={toggleFullList} />
+    Display cities with a smaller population than Boston
+  </label>
+</div>
+
 <style>
+  #checkbox {
+    float: right;
+    background-color: lightyellow;
+  }
+
   #checkbox label,
   input {
     cursor: pointer;
