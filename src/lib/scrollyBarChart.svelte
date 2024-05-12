@@ -128,6 +128,7 @@
             .style("stroke", "black")
             .style("stroke-dasharray", "3,3");
         lineGroup.append("text")
+            .attr("class", "lineText")
             .style("fill", "black")
             .text(`median annual rent`)
             .attr("x", chartParams.width - chartParams.marginRight + 2)           // set x position of left side of text
@@ -188,10 +189,8 @@
                 let svgNat = d3.select("#nationalChart svg");
                 svgNat.selectAll("line").remove();
                 svgNat.selectAll(".xlabel").remove();
+                svgNat.selectAll(".lineText").remove();
 
-                let svgBos = d3.select("#bostonChart svg");
-                svgBos.selectAll("line").remove();
-                svgNat.selectAll(".xlabel").remove();
             } catch (e) {
                 //svgs have not been created yet, do nothing
             }
@@ -206,6 +205,7 @@
 
             let svgBos = d3.select("#bostonChart svg");
             svgBos.selectAll(".xlabel").remove();
+            svgBos.selectAll(".lineText").remove();
             svgBos.selectAll("line").remove();
 
             addRentLine(nationalData, svgNat);
