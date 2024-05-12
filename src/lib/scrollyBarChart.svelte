@@ -44,21 +44,21 @@
         "Renter Household Income in Majority Black Neighborhoods"
     ];
     let narrative = [
-        "The median national rent is $15216 annually or $1268/month",
-        "In Boston, these figures rise to $23772 annually or $1981 monthly",
-        "The average renter household earns $41000 nationally, meaning rent costs 37.1% of earnings",
-        "In Boston, renter households actually make less at $40501 annually, meaning rent costs total 58.7% of earnings",
-        "Homeowner households nationally earn a household income of $78000",
-        "In Boston, homeonwers earn more at $102062",
-        "Further, in Boston, renter households in majority black neighborhoods earn on average $26830 annually" 
+        "The median national rent is $15,216 annually, or $1,268/month.",
+        "In Boston, these figures rise to $23,772 annually, or $1,981/month.",
+        "The average renter household earns $41,000 nationally, meaning rent costs 37.1% of earnings.",
+        "In Boston, renter households make only $40,501 annually, meaning rent costs 58.7% of earnings.",
+        "Homeowner households nationally earn a household income of $78,000.",
+        "In Boston, homeowners earn more, at $102,062 - making the jump from renting to owning even more challenging.",
+        "Further, in Boston, renter households in majority black neighborhoods earn, on average, $26,830 annually - meaning they face an even more unaffordable rental market." 
     ]
 
     const chartConfig = {
-        width: 400,
-        height: 300,
+        width: 800,
+        height: 250,
         marginTop: 30,
-        marginRight: 20,
-        marginBottom: 30,
+        marginRight: 200,
+        marginBottom: 50,
         marginLeft: 60,
     };
 
@@ -106,6 +106,15 @@
             .attr("transform", `translate(${chartParams.marginLeft},0)`)
             .call(d3.axisLeft(y));
 
+        svg.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "end")
+            .attr("y", -2)
+            .attr("x", -75)
+            .attr("dy", ".75em")
+            .attr("transform", "rotate(-90)")
+            .text("dollars");
+
         return svg;
     }
 
@@ -118,11 +127,17 @@
             .attr("y2", chartParams.yScale(data.medianAnnualRent))
             .style("stroke", "black")
             .style("stroke-dasharray", "3,3");
+        lineGroup.append("text")
+            .attr("class", "lineText")
+            .style("fill", "black")
+            .text(`median annual rent`)
+            .attr("x", chartParams.width - chartParams.marginRight + 2)           // set x position of left side of text
+            .attr("y", chartParams.yScale(data.medianAnnualRent) + 5);          // set y pisition of bottom of text
     }
-    function addBar(data, svg, labels) {
-        svg.selectAll("rect").remove();
-        svg.selectAll(".barText").remove();
-        svg.selectAll(".xAxisLabel").remove(); 
+    function addBar(data, svg, labels, color) {
+        // svg.selectAll("rect").remove();
+        // svg.selectAll(".barText").remove();
+        // svg.selectAll(".xAxisLabel").remove(); 
 
         const x = chartParams.xScale.domain([...chartParams.xScale.domain(), ...labels]);
         const y = chartParams.yScale;
@@ -135,7 +150,7 @@
                 .attr("y", y(currentData.value))
                 .attr("width", x.bandwidth())
                 .attr("height", chartParams.height - chartParams.marginBottom - y(currentData.value))
-                .attr("fill", "steelblue");
+                .attr("fill", color);
 
             svg.append("text")
                 .attr("class", "barText")
@@ -146,10 +161,18 @@
 
             svg.append("text")
                 .attr("class", "xAxisLabel")
+                .style("font-size", "75%")
                 .attr("x", x(label) + x.bandwidth() / 2)
-                .attr("y", chartParams.height - 5)
+                .attr("y", chartParams.height - 30)
                 .attr("text-anchor", "middle")
                 .text(label);
+
+            svg.append("text")
+                .attr("class", "xlabel")
+                .attr("text-anchor", "end")
+                .attr("x", chartParams.width/2)
+                .attr("y", chartParams.height - 5)
+                .text("Average Annual Income");
         });
         addRentLine(data, svg);
     }
@@ -161,26 +184,73 @@
     });
 
     function updateChart(step) {
-        if (step >= 10) {
-            addRentLine(nationalData, d3.select("#nationalChart svg"));
+        if (step < 6) {
+            try {
+                let svgNat = d3.select("#nationalChart svg");
+                svgNat.selectAll("line").remove();
+                svgNat.selectAll(".xlabel").remove();
+                svgNat.selectAll(".lineText").remove();
+
+            } catch (e) {
+                //svgs have not been created yet, do nothing
+            }
         }
-        if (step >= 20) {
-            addRentLine(bostonData, d3.select("#bostonChart svg"));
+
+        if (step >= 6) {
+            let svgNat = d3.select("#nationalChart svg");
+            svgNat.selectAll("rect").remove();
+            svgNat.selectAll(".barText").remove();
+            svgNat.selectAll(".xAxisLabel").remove();
+            svgNat.selectAll(".xlabel").remove();
+
+            let svgBos = d3.select("#bostonChart svg");
+            svgBos.selectAll(".xlabel").remove();
+            svgBos.selectAll(".lineText").remove();
+            svgBos.selectAll("line").remove();
+
+            addRentLine(nationalData, svgNat);
         }
-        if (step >= 30) {
-            addBar(nationalData, d3.select("#nationalChart svg"), ["Renters"]);
+        if (step >= 21) {
+            let svg = d3.select("#bostonChart svg");
+            svg.selectAll("rect").remove();
+            svg.selectAll(".barText").remove();
+            svg.selectAll(".xAxisLabel").remove(); 
+            addRentLine(bostonData, svg);
         }
-        if (step >= 40) {
-            addBar(bostonData, d3.select("#bostonChart svg"), ["Renters"]);
+        if (step >= 37) {
+            let svg = d3.select("#nationalChart svg");
+            svg.selectAll("rect").remove();
+            svg.selectAll(".barText").remove();
+            svg.selectAll(".xAxisLabel").remove(); 
+            addBar(nationalData, svg, ["Renters"], "yellow");
         }
-        if (step >= 50) {
-            addBar(nationalData, d3.select("#nationalChart svg"), ["Renters", "Owners"]);
+        if (step >= 51) {
+            let svg = d3.select("#bostonChart svg");
+            svg.selectAll("rect").remove();
+            svg.selectAll(".barText").remove();
+            svg.selectAll(".xAxisLabel").remove(); 
+            addBar(bostonData, svg, ["Renters"], "steelBlue");
         }
-        if (step >= 60) {
-            addBar(bostonData, d3.select("#bostonChart svg"), ["Renters", "Owners"]);
+        if (step >= 67) {
+            let svg = d3.select("#nationalChart svg");
+            svg.selectAll("rect").remove();
+            svg.selectAll(".barText").remove();
+            svg.selectAll(".xAxisLabel").remove(); 
+            addBar(nationalData, svg, ["Renters", "Owners"], "yellow");
         }
-        if (step >= 70) {
-            addBar(bostonData, d3.select("#bostonChart svg"), ["Renters", "Owners", "Majority Black Neighborhoods"]);
+        if (step >= 80) {
+            let svg = d3.select("#bostonChart svg");
+            svg.selectAll("rect").remove();
+            svg.selectAll(".barText").remove();
+            svg.selectAll(".xAxisLabel").remove(); 
+            addBar(bostonData, svg, ["Renters", "Owners"], "steelBlue");
+        }
+        if (step >= 95) {
+            let svg = d3.select("#bostonChart svg");
+            svg.selectAll("rect").remove();
+            svg.selectAll(".barText").remove();
+            svg.selectAll(".xAxisLabel").remove(); 
+            addBar(bostonData, svg, ["Renters", "Owners", "Majority Black Neighborhoods"], "steelBlue");
         }
     }
 
@@ -188,18 +258,34 @@
 </script>
 
 <style>
-    mark {
+    /* mark {
 		padding: 0.5em;
 		position: fixed;
 		top: 0;
 		right: 0;
-	}
+	} */
+
+    p.narrative {
+        margin-top: 15em;
+        margin-bottom: 15em;
+    }
+
+    h3 {
+        margin-bottom: 0;
+    }
 </style>
 
-<mark>currentStep: {currentStep}</mark>
+<!-- <mark>**DEBUG** currentStep: {currentStep}</mark> -->
 
 <Scrolly bind:progress={currentStep}>
-    <div id="nationalChart"></div>
-    <div id="bostonChart"></div>
+    {#each narrative as line, index }
+        <p class="narrative">{line}</p>
+    {/each}
+    <svelte:fragment slot="viz">
+        <h3>National</h3>
+        <div id="nationalChart"></div>
+        <h3>Boston</h3>
+        <div id="bostonChart"></div>
+    </svelte:fragment>
 </Scrolly>
 
