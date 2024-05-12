@@ -222,35 +222,35 @@
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
             svg.selectAll(".xAxisLabel").remove(); 
-            addBar(nationalData, svg, ["Renters"], "steelBlue");
+            addBar(nationalData, svg, ["Renters"], "yellow");
         }
         if (step >= 51) {
             let svg = d3.select("#bostonChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
             svg.selectAll(".xAxisLabel").remove(); 
-            addBar(bostonData, svg, ["Renters"], "yellow");
+            addBar(bostonData, svg, ["Renters"], "steelBlue");
         }
         if (step >= 67) {
             let svg = d3.select("#nationalChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
             svg.selectAll(".xAxisLabel").remove(); 
-            addBar(nationalData, svg, ["Renters", "Owners"], "steelBlue");
+            addBar(nationalData, svg, ["Renters", "Owners"], "yellow");
         }
         if (step >= 80) {
             let svg = d3.select("#bostonChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
             svg.selectAll(".xAxisLabel").remove(); 
-            addBar(bostonData, svg, ["Renters", "Owners"], "yellow");
+            addBar(bostonData, svg, ["Renters", "Owners"], "steelBlue");
         }
         if (step >= 95) {
             let svg = d3.select("#bostonChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
             svg.selectAll(".xAxisLabel").remove(); 
-            addBar(bostonData, svg, ["Renters", "Owners", "Majority Black Neighborhoods"], "yellow");
+            addBar(bostonData, svg, ["Renters", "Owners", "Majority Black Neighborhoods"], "steelBlue");
         }
     }
 

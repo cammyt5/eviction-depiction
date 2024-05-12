@@ -38,7 +38,7 @@
 
     hr {
         border: 0;
-        height: 3px;
+        height: 8px;
     }
 
     hr.blue {
@@ -98,6 +98,14 @@
         font: 130% bold;
         font-family: sans-serif;
     }
+
+    h4 {
+        margin-bottom: 0;
+    }
+
+    ul {
+        margin: 1px;
+    }
 </style>
 
 <body>
@@ -108,7 +116,7 @@
     <hr class="yellow"/><hr class="blue"/>
 
     <h3>Background: Corporate Ownership on the Rise</h3>
-    <img src="img/intro1.JPG" alt="Boston home ownership rate over time">
+    <HoLineChart />
     <p>In the bustling streets of Boston, a city known for its rich history and vibrant culture, a quiet yet seismic shift has been occurring in the realm of housing. Over the past decade, the landscape of homeownership has undergone a remarkable transformation, with fewer Bostonians finding themselves holding the keys to their own abode. The quintessential American dream of owning a home, once within reach for many, now seems to be slipping through the fingers of an increasing number of residents.</p>
     <DataTable data={homeOwnershipData} />
     <img src="img/intro2.JPG" alt="Boston eviction rate maps over time">
@@ -117,12 +125,13 @@
     <img src="img/intro3.JPG" alt="Boston corporate ownership ownership rate over time">
     <p>To shed light on this phenomenon, we turn our attention to the dynamics of renting, particularly in the realm of corporate landlordship. With the rise of corporate entities dominating the rental market, questions emerge regarding the impact of this shift on housing stability and community well-being. Have these corporate giants reshaped the fabric of Boston's neighborhoods, or are they merely responding to broader societal trends?</p>
 
+    <ScrollyBarChart />
+
     <hr class="yellow"/>
     <h3>Corporate Ownership ≠ Evictions</h3>
     <p>Let's investigate the link between corporate ownership and evictions in Boston using a dataset of Boston evictions between 2020-2023 on the <span class="text-tooltip" data-tooltip="Roughly neighborhood-sized chunks of the city.">census tract level</span>.</p>
     <p>First, we must define a few terms: in our analysis, we define the <em>eviction rate</em> in a given census tract to be the <em>annual number of evictions filed</em> divided by the <span class="text-tooltip" data-tooltip="Determined by multiplying the census tract population by one minus the tract's owner-occupancy rate."><em>renter population</em></span>.
         
-    <ScrollyBarChart />
     <p>The natural first step is to compare the <em>corporate ownership rate</em> to the <em>eviction rate</em> in each census tracts. However, the resulting graph does demonstrate any obvious corrolation:</p>
 
     <Plot fname="fig1.json" />
@@ -167,5 +176,13 @@
     <hr class="yellow"/>
     <h3>Conclusion</h3>
     <p>Corporate ownership is part of the complex landscape of housing in Boston. When a higher percentage of rental properties are bought by corporations in a neighborhood, that neighborhood is more likely to have a high rate of evictions. However, these corporations are not all made equal: specifically, when there are more institutional investors, businesses making large investments, and house-flippers in a neighborhood, the eviction rate is more likely to be high. Small investors and non-investors are not tied tp evictions in the same way.</p>
-    <HoLineChart />
+
+    <h3>Attribution</h3>
+    <p>This project was developed with guidance and feedback from the <a href="https://www.mapc.org/">Metropolitan Area Planning Commission (MAPC)</a>.</p>
+    <h4>Data Sources</h4>
+    <ul>
+        <li>City of Boston Department of Neighborhood Development - Boston Housing Court Eviction Filing Records (2014-2016)</li>
+        <li>City of Boston Department of Neighborhood Development - Income-Restricted Housing Database (2018)</li>
+        <li>American Community Survey 5-year Estimates (2013-2017)
+    </ul>
 </body>
