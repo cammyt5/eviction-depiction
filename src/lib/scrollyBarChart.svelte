@@ -141,6 +141,7 @@
 
         const x = chartParams.xScale.domain([...chartParams.xScale.domain(), ...labels]);
         const y = chartParams.yScale;
+        const currencyFormat = d3.format("$,.0f");
 
         labels.forEach(label => {
             const currentData = data.objects.find(obj => obj.label === label);
@@ -157,7 +158,7 @@
                 .attr("x", x(label) + x.bandwidth() / 2)
                 .attr("y", y(currentData.value) - 5)
                 .attr("text-anchor", "middle")
-                .text(currentData.value);
+                .text(currencyFormat(currentData.value));
 
             svg.append("text")
                 .attr("class", "xAxisLabel")
