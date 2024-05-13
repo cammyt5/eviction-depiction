@@ -107,20 +107,35 @@
         background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #FFE262, rgba(0, 0, 0, 0));
     }
 
-    [data-tooltip]:hover::after {
-        display: block;
-        position: absolute;
-        content: attr(data-tooltip);
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        text-decoration-line: underline;
+        text-decoration-color: #2C6DC3;
+        text-decoration-thickness: 2px;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 300px;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
         border: 1px solid black;
         background: #9FD2FF;
         margin: .5em;
         padding: .25em;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        top: 100%;
+        margin-left: -150px;
     }
 
-    .text-tooltip {
-        text-decoration-line: underline;
-        text-decoration-color: #2C6DC3;
-        text-decoration-thickness: 2px;
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
     }
 
     .viz-placeholder {
@@ -263,8 +278,8 @@
 
     <hr class="yellow"/>
     <h3>Corporate Ownership ≠ Evictions</h3>
-    <p>Let's investigate the link between corporate ownership and evictions in Boston using a dataset of Boston evictions between 2020-2023 on the <span class="text-tooltip" data-tooltip="Roughly neighborhood-sized chunks of the city.">census tract level</span>.      <span style="color: gray;">← Hover over underlined text for a definition!</span></p>
-    <p>First, we must define a few terms: in our analysis, we define the <em>eviction rate</em> in a given census tract to be the <em>annual number of evictions filed</em> divided by the <span class="text-tooltip" data-tooltip="Determined by multiplying the census tract population by one minus the tract's owner-occupancy rate."><em>renter population</em></span>.
+    <p>Let's investigate the link between corporate ownership and evictions in Boston using a dataset of Boston evictions between 2020-2023 on the <span class="tooltip">census tract level<span class="tooltiptext">Roughly neighborhood-sized chunks of the city.</span></span>.      <span style="color: gray;">← Hover over underlined text for a definition!</span></p>
+    <p>First, we must define a few terms: in our analysis, we define the <em>eviction rate</em> in a given census tract to be the <em>annual number of evictions filed</em> divided by the <span class="tooltip"><em>renter population</em><span class="tooltiptext">Determined by multiplying the census tract population by one minus the tract's owner-occupancy rate.</span></span>.
         
     <p>The natural first step is to compare the <em>corporate ownership rate</em> to the <em>eviction rate</em> in each census tracts. However, the resulting graph does demonstrate any obvious corrolation:</p>
 
@@ -277,7 +292,7 @@
     <hr class="blue"/>
     <h3>Not All Corporations are Equal</h3>
     <p>The term "corporate ownership" is an umbrella that covers a wide range of ownership scenarios: big banks, large companies, family businesses, live-in landlords, and even some cases of government ownership. As we consider each corporation type individually, how does the corrolation to eviction rates vary?</p>
-    <p>Neighborhoods with higher percentages of home purchases by <span class="text-tooltip" data-tooltip="Limited Liability Company - operators have personal liability protection and, unlike a corporation, aren't required to hire a board of directors or conduct meetings.">LLCs</span> and <span class="text-tooltip" data-tooltip="A legal arrangement to ensure assets go to specific beneficiaries.">trusts</span> see the highest corrolation with eviction rates. Eviction rates are also positively corrolated with banks, government buyers, and <span class="text-tooltip" data-tooltip="An entity established to facilitate the flow of credit to specific sectors of the economy. They are privately held, but provide public financial services. GSEs buy and sell mortgage loans.">GSEs</span>, though often these purchases by these corporation types happen in the <span class="text-tooltip" data-tooltip="such as after foreclosures">aftermath of evictions</span> and are not the root cause. Among the corporation types in our dataset, businesses had the lowest corrolation with eviction rates - likely because, unlike an LLC, business owners must be licensed and can be liable for the debts and obligations of the business and are less likely to get away with predatory practices.</p>
+    <p>Neighborhoods with higher percentages of home purchases by <span class="tooltip">LLCs<span class="tooltiptext">Limited Liability Company - operators have personal liability protection and, unlike a corporation, aren't required to hire a board of directors or conduct meetings.</span></span> and <span class="tooltip">trusts<span class="tooltiptext">A legal arrangement to ensure assets go to specific beneficiaries.</span></span> see the highest corrolation with eviction rates. Eviction rates are also positively corrolated with banks, government buyers, and <span class="tooltip">GSEs<span class="tooltiptext">An entity established to facilitate the flow of credit to specific sectors of the economy. They are privately held, but provide public financial services. GSEs buy and sell mortgage loans.</span></span>, though often these purchases by these corporation types happen in the <span class="tooltip">aftermath of evictions<span class="tooltiptext">such as after foreclosures</span></span> and are not the root cause. Among the corporation types in our dataset, businesses had the lowest corrolation with eviction rates - likely because, unlike an LLC, business owners must be licensed and can be liable for the debts and obligations of the business and are less likely to get away with predatory practices.</p>
     <p>However, the most interesting metric to visualize is corporate purchases broken down by investor "magnitude." Use the slider below to see how areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
 
     <div class="viz" style="margin-bottom: 6em;">
