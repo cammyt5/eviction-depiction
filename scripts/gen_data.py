@@ -1,7 +1,9 @@
 import json
 import os
 import pandas as pd
+from plotly.subplots import make_subplots
 import plotly.express as px
+import plotly.graph_objects as go
 
 scripts_dir = os.path.dirname(os.path.realpath(__file__))
 static_dir = f"{os.path.dirname(scripts_dir)}/static"
@@ -45,7 +47,9 @@ fig1 = px.scatter(
         "corp_own_rate": "Corporate Ownership Rate (%)",
     },
 )
-fig1.update_traces(hovertemplate = 'Corporate Ownership Rate: %{x:.2%}<br>Eviction Rate: %{y:.2%}')
+fig1.update_traces(
+    hovertemplate="Corporate Ownership Rate: %{x:.2%}<br>Eviction Rate: %{y:.2%}"
+)
 with open(f"{static_dir}/fig1.json", "w") as f:
     f.write(fig1.to_json() or "")
 
@@ -168,8 +172,12 @@ high_medium_investor_buy_rate = data["medium_investor_buy_rate"].nlargest(20)
 low_medium_investor_buy_rate = data["medium_investor_buy_rate"].nsmallest(20)
 high_large_investor_buy_rate = data["large_investor_buy_rate"].nlargest(20)
 low_large_investor_buy_rate = data["large_investor_buy_rate"].nsmallest(20)
-high_institutional_investor_buy_rate = data["institutional_investor_buy_rate"].nlargest(20)
-low_institutional_investor_buy_rate = data["institutional_investor_buy_rate"].nsmallest(20)
+high_institutional_investor_buy_rate = data["institutional_investor_buy_rate"].nlargest(
+    20
+)
+low_institutional_investor_buy_rate = data["institutional_investor_buy_rate"].nsmallest(
+    20
+)
 
 fig4s = [
     px.scatter(
@@ -254,16 +262,18 @@ with open(f"{static_dir}/map.json", "w") as f:
 for feature in neighborhoods["features"]:
     if feature["properties"]["pop"] > 0:
         black_percentage = feature["properties"]["nhaa"] / feature["properties"]["pop"]
-        hispanic_percentage = feature["properties"]["lat"] / feature["properties"]["pop"]
-        
+        hispanic_percentage = (
+            feature["properties"]["lat"] / feature["properties"]["pop"]
+        )
+
         if black_percentage >= 0.5:
             feature["properties"]["majority_black"] = True
-        
+
         if hispanic_percentage >= 0.5:
             feature["properties"]["majority_hisp"] = True
-        
+
         mhi = feature["properties"]["mhi"]
-        
+
         if mhi in top_20_mhi.values:
             feature["properties"]["high_income"] = True
         elif mhi in bot_20_mhi.values:
@@ -282,25 +292,25 @@ for feature in neighborhoods["features"]:
             feature["properties"]["high_gov_buy_rate"] = True
         elif gov_buy_rate <= low_gov_buy_rate.max():
             feature["properties"]["low_gov_buy_rate"] = True
-    
+
         gse_buy_rate = feature["properties"]["buyer_gse_ind_sum"] / num_transactions
         if gse_buy_rate >= high_gse_buy_rate.min():
             feature["properties"]["high_gse_buy_rate"] = True
         elif gse_buy_rate <= low_gse_buy_rate.values.max():
             feature["properties"]["low_gse_buy_rate"] = True
-        
+
         trst_buy_rate = feature["properties"]["buyer_trst_ind_sum"] / num_transactions
         if trst_buy_rate >= high_trst_buy_rate.min():
             feature["properties"]["high_trst_buy_rate"] = True
         elif trst_buy_rate <= low_trst_buy_rate.values.max():
             feature["properties"]["low_trst_buy_rate"] = True
-        
+
         bus_buy_rate = feature["properties"]["buyer_bus_ind_sum"] / num_transactions
         if bus_buy_rate >= high_bus_buy_rate.min():
             feature["properties"]["high_bus_buy_rate"] = True
         elif bus_buy_rate <= low_bus_buy_rate.values.max():
             feature["properties"]["low_bus_buy_rate"] = True
-        
+
         bnk_buy_rate = feature["properties"]["buyer_bnk_ind_sum"] / num_transactions
         if bnk_buy_rate >= high_bnk_buy_rate.min():
             feature["properties"]["high_bnk_buy_rate"] = True
@@ -308,18 +318,32 @@ for feature in neighborhoods["features"]:
             feature["properties"]["low_bnk_buy_rate"] = True
 
         ## Investment sizes
-        total_investors = feature["properties"]["sum_non_investor"] + feature["properties"]["sum_small_investor"] + feature["properties"]["sum_medium_investor"] + feature["properties"]["sum_large_investor"] + feature["properties"]["sum_institutional_investor"]
-        non_investor_buy_rate = feature["properties"]["sum_non_investor"] / total_investors
+        total_investors = (
+            feature["properties"]["sum_non_investor"]
+            + feature["properties"]["sum_small_investor"]
+            + feature["properties"]["sum_medium_investor"]
+            + feature["properties"]["sum_large_investor"]
+            + feature["properties"]["sum_institutional_investor"]
+        )
+        non_investor_buy_rate = (
+            feature["properties"]["sum_non_investor"] / total_investors
+        )
         small_investor_buy_rate = feature["properties"]["sum_small_investor"]
-        medium_investor_buy_rate = feature["properties"]["sum_medium_investor"] / total_investors
-        large_investor_buy_rate = feature["properties"]["sum_large_investor"] / total_investors
-        institutional_investor_buy_rate = feature["properties"]["sum_institutional_investor"] / total_investors
+        medium_investor_buy_rate = (
+            feature["properties"]["sum_medium_investor"] / total_investors
+        )
+        large_investor_buy_rate = (
+            feature["properties"]["sum_large_investor"] / total_investors
+        )
+        institutional_investor_buy_rate = (
+            feature["properties"]["sum_institutional_investor"] / total_investors
+        )
 
         if non_investor_buy_rate >= high_non_investor_buy_rate.min():
             feature["properties"]["high_non_investor_buy_rate"] = True
         elif non_investor_buy_rate <= low_non_investor_buy_rate.max():
             feature["properties"]["low_non_investor_buy_rate"] = True
-        
+
         if small_investor_buy_rate >= high_small_investor_buy_rate.min():
             feature["properties"]["high_small_investor_buy_rate"] = True
         elif small_investor_buy_rate <= low_small_investor_buy_rate.max():
@@ -335,9 +359,14 @@ for feature in neighborhoods["features"]:
         elif large_investor_buy_rate <= low_large_investor_buy_rate.max():
             feature["properties"]["low_large_investor_buy_rate"] = True
 
-        if institutional_investor_buy_rate >= high_institutional_investor_buy_rate.min():
+        if (
+            institutional_investor_buy_rate
+            >= high_institutional_investor_buy_rate.min()
+        ):
             feature["properties"]["high_institutional_investor_buy_rate"] = True
-        elif institutional_investor_buy_rate <= low_institutional_investor_buy_rate.max():
+        elif (
+            institutional_investor_buy_rate <= low_institutional_investor_buy_rate.max()
+        ):
             feature["properties"]["low_institutional_investor_buy_rate"] = True
 
 
@@ -364,8 +393,74 @@ fig2.update_geos(
     showland=False,
     fitbounds="locations",
 )
-fig2.update_traces(marker=dict(color='red'), selector=dict(type='choropleth', z=data['majority_black']))
+fig2.update_traces(
+    marker=dict(color="red"), selector=dict(type="choropleth", z=data["majority_black"])
+)
 
 # Save the map to map2.json
 with open(f"{static_dir}/map2.json", "w") as f:
     f.write(fig2.to_json() or "")
+
+
+### Map 3
+with open(f"{scripts_dir}/Boston_Neighborhoods.geojson") as f:
+    boston_neighborhoods = json.load(f)
+
+corp_own_rates_over_time = pd.read_csv(
+    f"{scripts_dir}/Change Over Time_Corporate Ownership & Owner Occupancy Rates in Boston Neighborhoods.csv"
+)
+
+fig = make_subplots(
+    rows=1,
+    cols=2,
+    subplot_titles=["Corporate Ownership Rate of<br>Boston Rentals (2004)", "Corporate Ownership Rate of<br>Boston Rentals (2024)"],
+    specs=[[{"type": "mapbox"}, {"type": "mapbox"}]],
+)
+
+corp_own_rates_2004 = corp_own_rates_over_time[corp_own_rates_over_time.Year == 2004]
+corp_own_rates_2024 = corp_own_rates_over_time[corp_own_rates_over_time.Year == 2024]
+
+fig.add_trace(
+    go.Choroplethmapbox(
+        geojson=boston_neighborhoods,
+        locations=corp_own_rates_2004["Neighborhood"],
+        z=corp_own_rates_2004["corp_own_rate"],
+        featureidkey="properties.blockgr2020_ctr_neighb_name",
+        colorscale="Viridis",
+        zmin=0,
+        zmax=0.4,
+        marker_opacity=0.5,
+        showlegend=False,
+    ),
+    row=1,
+    col=1,
+)
+
+fig.add_trace(
+    go.Choroplethmapbox(
+        geojson=boston_neighborhoods,
+        locations=corp_own_rates_2024["Neighborhood"],
+        z=corp_own_rates_2024["corp_own_rate"],
+        featureidkey="properties.blockgr2020_ctr_neighb_name",
+        colorscale="Viridis",
+        showscale=False,
+        zmin=0,
+        marker_opacity=0.5,
+        showlegend=False,
+    ),
+    row=1,
+    col=2,
+)
+
+fig.update_mapboxes(
+    center={"lat": 42.3166909, "lon": -71.0860779},
+)
+fig.update_layout(margin=dict(l=0, r=0, t=50, b=10))
+
+fig.update_layout(
+    mapbox1=dict(zoom=10, style="carto-positron"),
+    mapbox2=dict(zoom=10, style="carto-positron"),
+)
+
+with open(f"{static_dir}/map3.json", "w") as f:
+    f.write(fig.to_json() or "")
