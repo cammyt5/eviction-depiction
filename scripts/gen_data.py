@@ -48,7 +48,8 @@ fig1 = px.scatter(
     },
 )
 fig1.update_traces(
-    hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Ownership Rate: %{x:.2%}"
+    hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Ownership Rate: %{x:.2%}",
+    selector=dict(mode="markers")
 )
 fig1.update_layout(
     font=dict(
@@ -96,7 +97,8 @@ fig2.update_layout(
     hoverlabel=dict(font_family="Times New Roman, Times, serif"),
 )
 fig2.update_traces(
-    hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Buy Rate: %{x:.2%}"
+    hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Buy Rate: %{x:.2%}",
+    selector=dict(mode="markers")
 )
 fig2.update_xaxes(tickformat=",.0%")
 fig2.update_yaxes(tickformat=",.0%")
@@ -226,7 +228,8 @@ fig4s = [
 
 for i, (fig, col_title) in enumerate(fig4s):
     fig.update_traces(
-        hovertemplate=f"Eviction Rate: %{{y:.2%}}<br>{col_title}: %{{x:.2%}}"
+        hovertemplate=f"Eviction Rate: %{{y:.2%}}<br>{col_title}: %{{x:.2%}}",
+        selector=dict(mode="markers")
     )
 
 fig4 = go.Figure([item for row, _ in fig4s for item in row["data"]])
@@ -262,7 +265,8 @@ fig5 = px.scatter(
     },
 )
 fig5.update_traces(
-    hovertemplate="Eviction Rate: %{y:.2%}<br>Median Flip Horizon: %{x:.2s}"
+    hovertemplate="Eviction Rate: %{y:.2%}<br>Median Flip Horizon: %{x:.2s}",
+    selector=dict(mode="markers")
 )
 fig5.update_xaxes(tickformat=".2s")
 fig5.update_yaxes(tickformat=",.0%")
