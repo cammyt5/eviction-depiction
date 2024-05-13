@@ -344,11 +344,17 @@
     <p>This project was developed with guidance and feedback from the <a href="https://www.mapc.org/">Metropolitan Area Planning Commission (MAPC)</a>.</p>
     <h4>Data Sources</h4>
     <ul>
-        <li>City of Boston Department of Neighborhood Development - Boston Housing Court Eviction Filing Records (2014-2016)</li>
-        <li>City of Boston Department of Neighborhood Development - Income-Restricted Housing Database (2018)</li>
-        <li>American Community Survey 5-year Estimates (2013-2017)</li>
+        <li>City of Boston Department of Neighborhood Development - Boston Housing Court Eviction Filing Records (2014-2016) [cleaned class data]</li>
+        <li>City of Boston Department of Neighborhood Development - Income-Restricted Housing Database (2018) [cleaned class data]</li>
+        <li>American Community Survey 5-year Estimates (2013-2017) [cleaned class data]</li>
+        <li>City of Boston Residential Sales and Home Ownership Data [cleaned class data]</li>
         <li>American Community Survey 5-year Estimates (2017-2022)</li>
-        <li>City of Boston Residential Sales and Home Ownership Data</li>
         <li>US Census Bureau Metropolitan and Micropolitan Statistical Areas Totals (2020)</li>
+        <li>Federal Reserve Bank of St. Louis - <a href="https://fred.stlouisfed.org/series/RHORUSQ156N">Homeownership Rate in the United States</a></li>
+        <li>Federal Reserve Bank of St. Louis - <a href="https://fred.stlouisfed.org/series/HOWNRATEACS025025">Homeownership Rate (5-year estimate) for Suffolk County, MA</a></li>
+        <li>US Census Bureau - <a href="https://www.census.gov/library/stories/2023/06/owning-or-renting-the-american-dream.html#:~:text=A%20bigger%20share%20of%20homeowners,%2478%2C000%20compared%20to%20renters">Owning or Renting the American Dream</a> (national median income)</li>
+        <li>US Census Bureau - <a href="https://www.census.gov/quickfacts/fact/table/bostoncitymassachusetts/HSG860222#HSG860222">Quick Facts Boston, Massachusetts</a> (Boston median rent)</li>
+        <li>US Census Bureau - <a href="https://www.census.gov/quickfacts/fact/table/US/HSG860222#HSG860222">Quick Facts United States</a> (national median rent)</li>
+        <li>US Census Bureau - TIGER/Line Shapefiles</li>
     </ul>
 </body>
