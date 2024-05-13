@@ -259,7 +259,7 @@
     <p>The housing crisis in Boston has developed in tandem with another major phenomenon: the rise in corporate ownership across the city.</p>
     <Plot fname="map3.json" />
 
-    <p>The concept of "corporate ownership" calls to mind an image of large, faceless corporation barreling into a neighborhood and evicting long-time residents just to jack up rent and maximize profit. Who are these "corporate owners," really? Do they all have the same corrolation to evictions, and are they all bad actors? In the remainder of this article, to examine the impact of corporations on each neighborhood, we will look specifically at the corrolation between corporate owners and evictions.</p>
+    <p>The concept of "corporate ownership" calls to mind an image of large, faceless corporation barreling into a neighborhood and evicting long-time residents just to jack up rent and maximize profit. Who are these "corporate owners," really? If we can show that corporate purchases are tied to evictions in Boston neighborhoods, we can make a case that corporate purchasing does not "spur economic growth" as these corporations may claim, but instead actively contributes to housing instability and unafforadability. Do all corporations have the same corrolation to evictions, or do some spur worse effects than others? In the remainder of this article, to examine the impact of corporations on each neighborhood, we will look specifically at the corrolation between corporate owners and evictions.</p>
 
     <hr class="yellow"/>
     <h3>Corporate Ownership ≠ Evictions</h3>
