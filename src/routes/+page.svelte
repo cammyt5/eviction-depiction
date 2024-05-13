@@ -12,8 +12,8 @@
     let selectorValue = "";
     const menuOptions = ["Demographics", "Corporations", "Investors"];
     const optionsToFeatures = {
-        "Demographics": ["majority_black", "majority_hisp", "high_income", "low_income"],
-        "Corporations": ["high_llc_buy_rate", "low_llc_buy_rate", "high_gov_buy_rate", "low_gov_buy_rate", 
+        "Demographics": ["majority_black", "majority_hispanic", "high_income", "low_income"],
+        "Corporations": ["high_corp_buy_rate", "low_corp_buy_rate", "high_llc_buy_rate", "low_llc_buy_rate", "high_gov_buy_rate", "low_gov_buy_rate", 
                         "high_gse_buy_rate", "low_gse_buy_rate", "high_trst_buy_rate", "low_trst_buy_rate", 
                         "high_bus_buy_rate", "low_bus_buy_rate", "high_bnk_buy_rate", "low_bnk_buy_rate"],
         "Investors": ["high_non_investor_buy_rate", "low_non_investor_buy_rate", 
@@ -28,7 +28,7 @@
         "high_llc_buy_rate": "High LLC Buy Rate",
         "low_llc_buy_rate": "Low LLC Buy Rate",
         "majority_black": "Majority Black Population",
-        "majority_hisp": "Majority Hispanic Population",
+        "majority_hispanic": "Majority Hispanic Population",
         "high_income": "High Median Household Income",
         "low_income": "Low Median Household Income",
         "high_gov_buy_rate": "High Government Buyer Rate",
@@ -50,7 +50,9 @@
         "high_large_investor_buy_rate": "High Large Investor Buyer Rate",
         "low_large_investor_buy_rate": "Low Large Investor Buyer Rate",
         "high_institutional_investor_buy_rate": "High Institutional Investor Buyer Rate",
-        "low_institutional_investor_buy_rate": "Low Institutional Investor Buyer Rate"
+        "low_institutional_investor_buy_rate": "Low Institutional Investor Buyer Rate",
+        "high_corp_buy_rate": "High Corporate Buy Rate",
+        "low_corp_buy_rate": "Low Corporate Buy Rate"
     };
 
     let expandedCategory = null;
@@ -212,6 +214,21 @@
         margin-top: 3em;
         margin-bottom: 3em;
     }
+    .container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px; /* Adjust as needed */
+        padding: 10px;
+        border-right: 1px solid #ccc; /* Optionally, add a border between sidebar and map */
+    }
+
+    .map-container {
+        flex: 1;
+        padding: 10px;
+    }
 </style>
 
 <body>
@@ -272,7 +289,7 @@
         <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
     </div>
 
-    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
+    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher rates of evictions.</p>
 
     <div class="viz"><Plot fname="fig5.json" /></div>
  
@@ -282,37 +299,42 @@
 
     <p>Eviction dynamics play out geographically across Boston: areas of the city with a high corporate buy rate or high makeup of certain underserved demographics also tend to have high eviction rates. <b>Use the dropdown to see the top 20 census tracts for your chosen category to see how that category "lines up" with areas with high eviction rates.</b></p>
     <p style="color: gray;">Tip: Click a category name again to return to a view of all census tracts.</p>
-    <Plot fname="map2.json" filter={(data, original) => {
-        if (data && data.length > 0) {
-            if (selectorValue) {
-                const filteredFeatures = original[0].geojson.features.filter(feature => feature.properties[selectorValue]);
-                data[0].geojson.features = filteredFeatures;
-            } else {
-                data[0].geojson.features = original[0].geojson.features;
-            }
-        }
-    }} />
-    <div class="dropdown">
-        <button class="dropbtn">Show me areas with</button>
-        <div class="dropdown-content">
-        {#each menuOptions as option}
-            <div class="dropdown-item">
-            <span class="option-title" on:click={() => toggleCategory(option)}>
-                {option}
-            </span>
-            {#if expandedCategory === option}
-                {#each optionsToFeatures[option] as feature}
-                <a on:click={() => handleFeatureSelect(feature)}>
-                    {featureNameMap[feature]}
-                </a>
-                {/each}
-            {/if}
+    <div class="container">
+        <div class="sidebar">
+            <EvictionDashboard selectedValue={selectorValue} dictionary={featureNameMap}/>
+            <div class="dropdown">
+                <button class="dropbtn">Show me areas with</button>
+                <div class="dropdown-content">
+                    {#each menuOptions as option}
+                    <div class="dropdown-item">
+                        <span class="option-title" on:click={() => toggleCategory(option)}>
+                            {option}
+                        </span>
+                        {#if expandedCategory === option}
+                        {#each optionsToFeatures[option] as feature}
+                        <a on:click={() => handleFeatureSelect(feature)}>
+                            {featureNameMap[feature]}
+                        </a>
+                        {/each}
+                        {/if}
+                    </div>
+                    {/each}
+                </div>
             </div>
-        {/each}
+        </div>
+        <div class="map-container">
+            <Plot fname="map2.json" filter={(data, original) => {
+                if (data && data.length > 0) {
+                    if (selectorValue) {
+                        const filteredFeatures = original[0].geojson.features.filter(feature => feature.properties[selectorValue]);
+                        data[0].geojson.features = filteredFeatures;
+                    } else {
+                        data[0].geojson.features = original[0].geojson.features;
+                    }
+                }
+            }} />
         </div>
     </div>
-    <EvictionDashboard selectedValue={selectorValue}/>
-
     <hr class="blue"/>
 
     <h3>Conclusion</h3>
@@ -322,8 +344,17 @@
     <p>This project was developed with guidance and feedback from the <a href="https://www.mapc.org/">Metropolitan Area Planning Commission (MAPC)</a>.</p>
     <h4>Data Sources</h4>
     <ul>
-        <li>City of Boston Department of Neighborhood Development - Boston Housing Court Eviction Filing Records (2014-2016)</li>
-        <li>City of Boston Department of Neighborhood Development - Income-Restricted Housing Database (2018)</li>
-        <li>American Community Survey 5-year Estimates (2013-2017)
+        <li>City of Boston Department of Neighborhood Development - Boston Housing Court Eviction Filing Records (2014-2016) [cleaned class data]</li>
+        <li>City of Boston Department of Neighborhood Development - Income-Restricted Housing Database (2018) [cleaned class data]</li>
+        <li>American Community Survey 5-year Estimates (2013-2017) [cleaned class data]</li>
+        <li>City of Boston Residential Sales and Home Ownership Data [cleaned class data]</li>
+        <li>American Community Survey 5-year Estimates (2017-2022)</li>
+        <li>US Census Bureau Metropolitan and Micropolitan Statistical Areas Totals (2020)</li>
+        <li>Federal Reserve Bank of St. Louis - <a href="https://fred.stlouisfed.org/series/RHORUSQ156N">Homeownership Rate in the United States</a></li>
+        <li>Federal Reserve Bank of St. Louis - <a href="https://fred.stlouisfed.org/series/HOWNRATEACS025025">Homeownership Rate (5-year estimate) for Suffolk County, MA</a></li>
+        <li>US Census Bureau - <a href="https://www.census.gov/library/stories/2023/06/owning-or-renting-the-american-dream.html#:~:text=A%20bigger%20share%20of%20homeowners,%2478%2C000%20compared%20to%20renters">Owning or Renting the American Dream</a> (national median income)</li>
+        <li>US Census Bureau - <a href="https://www.census.gov/quickfacts/fact/table/bostoncitymassachusetts/HSG860222#HSG860222">Quick Facts Boston, Massachusetts</a> (Boston median rent)</li>
+        <li>US Census Bureau - <a href="https://www.census.gov/quickfacts/fact/table/US/HSG860222#HSG860222">Quick Facts United States</a> (national median rent)</li>
+        <li>US Census Bureau - TIGER/Line Shapefiles</li>
     </ul>
 </body>
