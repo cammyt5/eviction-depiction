@@ -41,7 +41,7 @@ fig1 = px.scatter(
     y="eviction_rate",
     x="corp_own_rate",
     trendline="ols",
-    title="Corporate Ownership Rate vs Eviction Rate",
+    title="Corporate Ownership Rate vs Eviction Rate by Boston Census Tract",
     labels={
         "eviction_rate": "Eviction Rate (%)",
         "corp_own_rate": "Corporate Ownership Rate (%)",
@@ -80,7 +80,7 @@ fig2 = px.scatter(
     y="eviction_rate",
     x="corp_buy_rate",
     trendline="ols",
-    title="Corporate Buy Rate vs Eviction Rate",
+    title="Corporate Buy Rate vs Eviction Rate by Boston Census Tract",
     labels={
         "eviction_rate": "Eviction Rate (%)",
         "corp_buy_rate": "Corporate Buy Rate (%)",
@@ -202,7 +202,7 @@ fig4s = [
         y="eviction_rate",
         x=col,
         trendline="ols",
-        title=f"{col_title} vs Eviction Rate",
+        title=f"{col_title} vs Eviction Rate by Boston Census Tract",
         labels={
             "eviction_rate": "Eviction Rate (%)",
             col: f"% {col_title}",
@@ -240,7 +240,7 @@ fig5 = px.scatter(
     y="eviction_rate",
     x="median_flip_horizon",
     trendline="ols",
-    title="Median Filp Horizon vs Eviction Rate",
+    title="Median Filp Horizon vs Eviction Rate by Boston Census Tract",
     labels={
         "eviction_rate": "Eviction Rate (%)",
         "median_flip_horizon": "Median Flip Horizon (Months)",
