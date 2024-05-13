@@ -259,7 +259,7 @@ for feature in neighborhoods["features"]:
             feature["properties"]["majority_black"] = True
         
         if hispanic_percentage >= 0.5:
-            feature["properties"]["majority_hisp"] = True
+            feature["properties"]["majority_hispanic"] = True
         
         mhi = feature["properties"]["mhi"]
         

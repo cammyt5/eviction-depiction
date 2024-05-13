@@ -296,6 +296,7 @@
     <p>TODO: update to reflect refactored dashboard - These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
     <div class="container">
         <div class="sidebar">
+            <EvictionDashboard selectedValue={selectorValue} dictionary={featureNameMap}/>
             <div class="dropdown">
                 <button class="dropbtn">Show me areas with</button>
                 <div class="dropdown-content">
@@ -315,7 +316,6 @@
                     {/each}
                 </div>
             </div>
-            <EvictionDashboard selectedValue={selectorValue} dictionary={featureNameMap}/>
         </div>
         <div class="map-container">
             <Plot fname="map2.json" filter={(data, original) => {
