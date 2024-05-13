@@ -50,6 +50,13 @@ fig1 = px.scatter(
 fig1.update_traces(
     hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Ownership Rate: %{x:.2%}"
 )
+fig1.update_layout(
+    font=dict(
+        family="Times New Roman, Times, serif",
+        color="black",
+    ),
+    hoverlabel=dict(font_family="Times New Roman, Times, serif"),
+)
 with open(f"{static_dir}/fig1.json", "w") as f:
     f.write(fig1.to_json() or "")
 
@@ -78,6 +85,13 @@ fig2 = px.scatter(
         "eviction_rate": "Eviction Rate (%)",
         "corp_buy_rate": "Corporate Buy Rate (%)",
     },
+)
+fig2.update_layout(
+    font=dict(
+        family="Times New Roman, Times, serif",
+        color="black",
+    ),
+    hoverlabel=dict(font_family="Times New Roman, Times, serif"),
 )
 fig2.update_traces(
     hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Buy Rate: %{x:.2%}"
@@ -207,6 +221,13 @@ for i, fig in enumerate(fig4s):
     fig.update_traces(
         hovertemplate="Eviction Rate: %{y:.2%}<br>Non Investors: %{x:.2%}"
     )
+    fig.update_layout(
+        font=dict(
+            family="Times New Roman, Times, serif",
+            color="black",
+        ),
+        hoverlabel=dict(font_family="Times New Roman, Times, serif"),
+    )
     with open(f"{static_dir}/fig4{chr(ord('a') + i)}.json", "w") as f:
         f.write(fig.to_json() or "")
 
@@ -229,6 +250,13 @@ fig5.update_traces(
     hovertemplate="Eviction Rate: %{y:.2%}<br>Median Flip Horizon: %{x:.2s}"
 )
 fig5.update_xaxes(tickformat=".2s")
+fig5.update_layout(
+    font=dict(
+        family="Times New Roman, Times, serif",
+        color="black",
+    ),
+    hoverlabel=dict(font_family="Times New Roman, Times, serif"),
+)
 
 with open(f"{static_dir}/fig5.json", "w") as f:
     f.write(fig5.to_json() or "")
@@ -401,7 +429,6 @@ fig2 = go.Figure(
         colorscale="Viridis",
         zmin=0,
         zmax=0.2,
-        # zoom=10.2,  # type: ignore
         marker_opacity=0.5,
         hovertemplate="Eviction Rate: %{z:.2%}<extra></extra>",
     )
@@ -425,9 +452,12 @@ fig2.update_layout(
     mapbox_style="carto-positron",
     mapbox_center={"lat": 42.3166909, "lon": -71.0860779},
     mapbox_zoom=10.2,
+    font=dict(
+        family="Times New Roman, Times, serif",
+        color="black",
+    ),
+    hoverlabel=dict(font_family="Times New Roman, Times, serif"),
 )
-
-fig2.show()
 
 # Save the map to map2.json
 with open(f"{static_dir}/map2.json", "w") as f:
@@ -494,7 +524,6 @@ fig.update_layout(
     margin=dict(l=0, r=0, t=50, b=10),
     font=dict(
         family="Times New Roman, Times, serif",
-        # size=18,
         color="black",
     ),
     hoverlabel=dict(font_family="Times New Roman, Times, serif"),
