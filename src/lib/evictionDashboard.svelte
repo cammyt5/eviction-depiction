@@ -38,10 +38,10 @@
 <div class="dashboard">
     <h3>Eviction Rate Comparison</h3>
     {#if selectedValue === ""}
-        <p>Boston overall average eviction rate: <span style="color: black">{averageEvictionRateAll.toFixed(2)}%</span></p>
+        <p>Boston Average Eviction Rate: <span style="color: black">{averageEvictionRateAll.toFixed(2)}%</span></p>
     {:else}
         <p>Areas with a {dictionary[selectedValue]}: <span style="color: {averageEvictionRateSelected > averageEvictionRateAll ? 'red' : 'green'}">{averageEvictionRateSelected.toFixed(2)}%</span></p>
-        <p>All other areas: <span style="color: black">{averageEvictionRateAll.toFixed(2)}%</span></p>
+        <p>Boston Average: <span style="color: black">{averageEvictionRateAll.toFixed(2)}%</span></p>
     {/if}
 </div>
 
