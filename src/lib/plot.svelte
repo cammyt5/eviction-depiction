@@ -5,6 +5,8 @@
 
   export let fname = "";
   export let filter = (_, __) => {};
+  export let filter_layout = (_, __) => {};
+    // export let modify_layout = (layout) => layout;
 
   let fig,
     originalData = [];
@@ -21,6 +23,7 @@
 
   $: {
     filter(fig?.data, originalData);
+    filter_layout(fig?.layout);
     plotly?.redraw(plotDiv);
   }
 </script>

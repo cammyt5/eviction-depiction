@@ -297,11 +297,22 @@
     <p>However, the most interesting metric to visualize is corporate purchases broken down by investor "magnitude." Use the slider below to see how areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
 
     <div class="viz" style="margin-bottom: 6em;">
-        <div style="height: 450px; width: 800px;">
-            {#key investment}
-            <Plot fname={["fig4a.json", "fig4b.json", "fig4c.json", "fig4d.json", "fig4e.json"][investment[0]]} />
-            {/key}
-        </div>
+        <Plot fname={"fig4.json"} filter={(data, original) => {
+            if (data && data.length > 0) {
+                const i = investment[0] * 2;
+                data[0] = original[i];
+                data[1] = original[i] + 1;
+                data.splice(0, data.length, ...original.slice(i, i + 2));
+            }}}
+            filter_layout={(layout) => {
+                if (layout && 'xaxis' in layout) {
+                    const axis = [ "Non Investors", "Small Investors", "Medium Investors", "Large Investors", "Institutional Investors"][investment[0]];
+                    layout.xaxis.title = `${axis} (%)`;
+                    layout.title = `${axis} vs Eviction Rate by Boston Census Tract`;
+                    return layout;
+                }
+            }}
+            }/>
         <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
     </div>
 

@@ -197,16 +197,19 @@ data["low_institutional_investor_buy_rate"] = data[
 ].nsmallest(20)
 
 fig4s = [
-    px.scatter(
-        data,
-        y="eviction_rate",
-        x=col,
-        trendline="ols",
-        title=f"{col_title} vs Eviction Rate by Boston Census Tract",
-        labels={
-            "eviction_rate": "Eviction Rate (%)",
-            col: f"% {col_title}",
-        },
+    (
+        px.scatter(
+            data,
+            y="eviction_rate",
+            x=col,
+            trendline="ols",
+            title=f"{col_title} vs Eviction Rate by Boston Census Tract",
+            labels={
+                "eviction_rate": "Eviction Rate (%)",
+                col: f"% {col_title}",
+            },
+        ),
+        col_title,
     )
     for col, col_title in [
         ("non_investor_buy_rate", "Non Investors"),
@@ -217,19 +220,25 @@ fig4s = [
     ]
 ]
 
-for i, fig in enumerate(fig4s):
+for i, (fig, col_title) in enumerate(fig4s):
     fig.update_traces(
-        hovertemplate="Eviction Rate: %{y:.2%}<br>Non Investors: %{x:.2%}"
+        hovertemplate=f"Eviction Rate: %{{y:.2%}}<br>{col_title}: %{{x:.2%}}"
     )
-    fig.update_layout(
-        font=dict(
-            family="Times New Roman, Times, serif",
-            color="black",
-        ),
-        hoverlabel=dict(font_family="Times New Roman, Times, serif"),
-    )
-    with open(f"{static_dir}/fig4{chr(ord('a') + i)}.json", "w") as f:
-        f.write(fig.to_json() or "")
+
+fig4 = go.Figure([item for row, _ in fig4s for item in row["data"]])
+fig4.update_layout(
+    title="TEMP vs Eviction Rate by Boston Census Tract",
+    font=dict(
+        family="Times New Roman, Times, serif",
+        color="black",
+    ),
+    yaxis_title="Eviction Rate (%)",
+    xaxis_title="TEMP",
+    hoverlabel=dict(font_family="Times New Roman, Times, serif"),
+)
+
+with open(f"{static_dir}/fig4.json", "w") as f:
+    f.write(fig4.to_json() or "")
 
 
 ### Plot 5
