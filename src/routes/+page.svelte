@@ -199,6 +199,7 @@
     /* Style the dropdown item */
     .dropdown-item {
         padding: 10px;
+        cursor: pointer;
     }
 
     /* Style the option title */
