@@ -48,7 +48,7 @@ fig1 = px.scatter(
     },
 )
 fig1.update_traces(
-    hovertemplate="Corporate Ownership Rate: %{x:.2%}<br>Eviction Rate: %{y:.2%}"
+    hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Ownership Rate: %{x:.2%}"
 )
 with open(f"{static_dir}/fig1.json", "w") as f:
     f.write(fig1.to_json() or "")
@@ -78,6 +78,9 @@ fig2 = px.scatter(
         "eviction_rate": "Eviction Rate (%)",
         "corp_buy_rate": "Corporate Buy Rate (%)",
     },
+)
+fig2.update_traces(
+    hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Buy Rate: %{x:.2%}"
 )
 with open(f"{static_dir}/fig2.json", "w") as f:
     f.write(fig2.to_json() or "")
@@ -201,6 +204,9 @@ fig4s = [
 ]
 
 for i, fig in enumerate(fig4s):
+    fig.update_traces(
+        hovertemplate="Eviction Rate: %{y:.2%}<br>Non Investors: %{x:.2%}"
+    )
     with open(f"{static_dir}/fig4{chr(ord('a') + i)}.json", "w") as f:
         f.write(fig.to_json() or "")
 
@@ -218,6 +224,9 @@ fig5 = px.scatter(
         "eviction_rate": "Eviction Rate (%)",
         "median_flip_horizon": "Median Flip Horizon (Months)",
     },
+)
+fig5.update_traces(
+    hovertemplate="Eviction Rate: %{y:.2%}<br>Median Flip Horizon: %{x:.2s}"
 )
 fig5.update_xaxes(tickformat=".2s")
 
@@ -383,20 +392,19 @@ for feature in neighborhoods["features"]:
         ):
             feature["properties"]["low_institutional_investor_buy_rate"] = True
 
-
-fig2 = px.choropleth_mapbox(
-    data,
-    geojson=neighborhoods,
-    locations="GEOID",
-    featureidkey="properties.GEOID",
-    color="eviction_rate",
-    color_continuous_scale="Viridis",
-    range_color=(0, 0.2),
-    mapbox_style="carto-positron",
-    zoom=11,
-    center={"lat": 42.3016909, "lon": -71.1010779},
-    opacity=0.5,
-    labels={"unemp": "unemployment rate"},
+fig2 = go.Figure(
+    go.Choroplethmapbox(
+        geojson=neighborhoods,
+        locations=data["GEOID"],
+        featureidkey="properties.GEOID",
+        z=data["eviction_rate"],
+        colorscale="Viridis",
+        zmin=0,
+        zmax=0.2,
+        # zoom=10.2,  # type: ignore
+        marker_opacity=0.5,
+        hovertemplate="Eviction Rate: %{z:.2%}<extra></extra>",
+    )
 )
 
 # Highlight or bold the outline of all the tracts with over 50% black population
@@ -408,8 +416,18 @@ fig2.update_geos(
     fitbounds="locations",
 )
 fig2.update_traces(
-    marker=dict(color="red"), selector=dict(type="choropleth", z=data["majority_black"])
+    marker=dict(color="red"),
+    selector=dict(type="choropleth", z=data["majority_black"]),
+    hovertemplate="Corporate Ownership Rate: %{z:0%}<extra></extra>",
 )
+fig2.update_layout(
+    margin={"r": 0, "t": 0, "l": 0, "b": 0},
+    mapbox_style="carto-positron",
+    mapbox_center={"lat": 42.3166909, "lon": -71.0860779},
+    mapbox_zoom=10.2,
+)
+
+fig2.show()
 
 # Save the map to map2.json
 with open(f"{static_dir}/map2.json", "w") as f:
