@@ -168,14 +168,13 @@
                 .attr("text-anchor", "middle")
                 .text(label);
 
+        });
             svg.append("text")
                 .attr("class", "xlabel")
                 .attr("text-anchor", "end")
                 .attr("x", chartParams.width/2)
                 .attr("y", chartParams.height - 5)
                 .text("Average Annual Income");
-        });
-        addRentLine(data, svg);
     }
 
     onMount(() => {
@@ -203,6 +202,7 @@
             svgNat.selectAll(".barText").remove();
             svgNat.selectAll(".xAxisLabel").remove();
             svgNat.selectAll(".xlabel").remove();
+            svgNat.selectAll(".lineText").remove();
 
             let svgBos = d3.select("#bostonChart svg");
             svgBos.selectAll(".xlabel").remove();
@@ -215,6 +215,7 @@
             let svg = d3.select("#bostonChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
+            svg.selectAll(".xlabel").remove();
             svg.selectAll(".xAxisLabel").remove(); 
             addRentLine(bostonData, svg);
         }
@@ -222,6 +223,7 @@
             let svg = d3.select("#nationalChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
+            svg.selectAll(".xlabel").remove();
             svg.selectAll(".xAxisLabel").remove(); 
             addBar(nationalData, svg, ["Renters"], "yellow");
         }
@@ -229,6 +231,7 @@
             let svg = d3.select("#bostonChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
+            svg.selectAll(".xlabel").remove();
             svg.selectAll(".xAxisLabel").remove(); 
             addBar(bostonData, svg, ["Renters"], "steelBlue");
         }
@@ -236,6 +239,7 @@
             let svg = d3.select("#nationalChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
+            svg.selectAll(".xlabel").remove();
             svg.selectAll(".xAxisLabel").remove(); 
             addBar(nationalData, svg, ["Renters", "Owners"], "yellow");
         }
@@ -243,6 +247,7 @@
             let svg = d3.select("#bostonChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
+            svg.selectAll(".xlabel").remove();
             svg.selectAll(".xAxisLabel").remove(); 
             addBar(bostonData, svg, ["Renters", "Owners"], "steelBlue");
         }
@@ -250,6 +255,7 @@
             let svg = d3.select("#bostonChart svg");
             svg.selectAll("rect").remove();
             svg.selectAll(".barText").remove();
+            svg.selectAll(".xlabel").remove();
             svg.selectAll(".xAxisLabel").remove(); 
             addBar(bostonData, svg, ["Renters", "Owners", "Majority Black Neighborhoods"], "steelBlue");
         }
