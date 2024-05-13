@@ -272,7 +272,7 @@
         <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
     </div>
 
-    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
+    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher rates of evictions.</p>
 
     <div class="viz"><Plot fname="fig5.json" /></div>
  
@@ -324,6 +324,8 @@
     <ul>
         <li>City of Boston Department of Neighborhood Development - Boston Housing Court Eviction Filing Records (2014-2016)</li>
         <li>City of Boston Department of Neighborhood Development - Income-Restricted Housing Database (2018)</li>
-        <li>American Community Survey 5-year Estimates (2013-2017)
+        <li>American Community Survey 5-year Estimates (2013-2017)</li>
+        <li>American Community Survey 5-year Estimates (2017-2022)</li>
+        <li>City of Boston Residential Sales and Home Ownership Data</li>
     </ul>
 </body>
