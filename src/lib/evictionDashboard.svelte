@@ -1,30 +1,50 @@
 <script>
     export let selectedValue = "";
+    export let dictionary = {};
     import { onMount } from "svelte";
-    import data from "../data/map2/map2.json";
+    import data from "../data/map2/data.json";
 
-    let averageEvictionRateAll = 0;
+    let averageEvictionRateAll = 3.46;
     let averageEvictionRateSelected = 0;
 
-    function calculateAverages() {
-        // Calculate average eviction rate for all neighborhoods
-        const totalEvictionRateAll = data.data.reduce((sum, neighborhood) => sum + neighborhood.properties.eviction_rate, 0);
-        averageEvictionRateAll = totalEvictionRateAll / data.data.length;
+    onMount(() => {
+        calculateAverages(); // Calculate averages when the component mounts
+    });
+    $: {
+        console.log("selectedVal: ", selectedValue)
+        console.log(data[selectedValue])
+        calculateAverages();
+    }
 
-        // Calculate average eviction rate for neighborhoods where selectedValue=true
-        const filteredNeighborhoods = data.data.filter(neighborhood => {
-        return neighborhood.properties[selectedValue] === true;
+    function calculateAverages() {
+        if (selectedValue === "") {
+            return; // Exit function if selectedValue is empty
+        }
+        // Filter out null or false values for the selected value
+        const selectedValueData = data[selectedValue];
+        const filteredIndexes = Object.keys(selectedValueData).filter(key => selectedValueData[key] !== null && selectedValueData[key] !== false);
+
+        // Calculate the average eviction rate for selected neighborhoods
+        let totalEvictionRateSelected = 0;
+        filteredIndexes.forEach(index => {
+            totalEvictionRateSelected += data["eviction_rate"][index] * 100;
         });
-        const totalEvictionRateSelected = filteredNeighborhoods.reduce((sum, neighborhood) => sum + neighborhood.properties.eviction_rate, 0);
-        averageEvictionRateSelected = filteredNeighborhoods.length > 0 ? totalEvictionRateSelected / filteredNeighborhoods.length : 0;
+
+        // Calculate the average eviction rate
+        averageEvictionRateSelected = filteredIndexes.length > 0 ? totalEvictionRateSelected / filteredIndexes.length : 0;
     }
 
 </script>
 <div class="dashboard">
-    <h3>Eviction Stats</h3>
-    <p>Areas with a "{selectedValue}": <span style="color: {averageEvictionRateSelected > averageEvictionRateAll ? 'red' : 'green'}">{averageEvictionRateSelected.toFixed(2)}%</span></p>
-    <p>All other areas: <span style="color: black">{averageEvictionRateAll.toFixed(2)}%</span></p>
+    <h3>Eviction Rate Comparison</h3>
+    {#if selectedValue === ""}
+        <p>Boston overall average eviction rate: <span style="color: black">{averageEvictionRateAll.toFixed(2)}%</span></p>
+    {:else}
+        <p>Areas with a {dictionary[selectedValue]}: <span style="color: {averageEvictionRateSelected > averageEvictionRateAll ? 'red' : 'green'}">{averageEvictionRateSelected.toFixed(2)}%</span></p>
+        <p>All other areas: <span style="color: black">{averageEvictionRateAll.toFixed(2)}%</span></p>
+    {/if}
 </div>
+
 <style>
     .dashboard {
       background-color: #f9f9f9;

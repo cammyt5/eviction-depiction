@@ -12,8 +12,8 @@
     let selectorValue = "";
     const menuOptions = ["Demographics", "Corporations", "Investors"];
     const optionsToFeatures = {
-        "Demographics": ["majority_black", "majority_hisp", "high_income", "low_income"],
-        "Corporations": ["high_llc_buy_rate", "low_llc_buy_rate", "high_gov_buy_rate", "low_gov_buy_rate", 
+        "Demographics": ["majority_black", "majority_hispanic", "high_income", "low_income"],
+        "Corporations": ["high_corp_buy_rate", "low_corp_buy_rate", "high_llc_buy_rate", "low_llc_buy_rate", "high_gov_buy_rate", "low_gov_buy_rate", 
                         "high_gse_buy_rate", "low_gse_buy_rate", "high_trst_buy_rate", "low_trst_buy_rate", 
                         "high_bus_buy_rate", "low_bus_buy_rate", "high_bnk_buy_rate", "low_bnk_buy_rate"],
         "Investors": ["high_non_investor_buy_rate", "low_non_investor_buy_rate", 
@@ -28,7 +28,7 @@
         "high_llc_buy_rate": "High LLC Buy Rate",
         "low_llc_buy_rate": "Low LLC Buy Rate",
         "majority_black": "Majority Black Population",
-        "majority_hisp": "Majority Hispanic Population",
+        "majority_hispanic": "Majority Hispanic Population",
         "high_income": "High Median Household Income",
         "low_income": "Low Median Household Income",
         "high_gov_buy_rate": "High Government Buyer Rate",
@@ -50,7 +50,9 @@
         "high_large_investor_buy_rate": "High Large Investor Buyer Rate",
         "low_large_investor_buy_rate": "Low Large Investor Buyer Rate",
         "high_institutional_investor_buy_rate": "High Institutional Investor Buyer Rate",
-        "low_institutional_investor_buy_rate": "Low Institutional Investor Buyer Rate"
+        "low_institutional_investor_buy_rate": "Low Institutional Investor Buyer Rate",
+        "high_corp_buy_rate": "High Corporate Buy Rate",
+        "low_corp_buy_rate": "Low Corporate Buy Rate"
     };
 
     let expandedCategory = null;
@@ -212,6 +214,21 @@
         margin-top: 3em;
         margin-bottom: 3em;
     }
+    .container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px; /* Adjust as needed */
+        padding: 10px;
+        border-right: 1px solid #ccc; /* Optionally, add a border between sidebar and map */
+    }
+
+    .map-container {
+        flex: 1;
+        padding: 10px;
+    }
 </style>
 
 <body>
@@ -277,37 +294,42 @@
     <h3>How Evictions Are Spatially Related to Corporate Activity (by Corporation Type) and Demographics</h3>
 
     <p>TODO: update to reflect refactored dashboard - These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
-    <Plot fname="map2.json" filter={(data, original) => {
-        if (data && data.length > 0) {
-            if (selectorValue) {
-                const filteredFeatures = original[0].geojson.features.filter(feature => feature.properties[selectorValue]);
-                data[0].geojson.features = filteredFeatures;
-            } else {
-                data[0].geojson.features = original[0].geojson.features;
-            }
-        }
-    }} />    
-    <div class="dropdown">
-        <button class="dropbtn">Show me areas with</button>
-        <div class="dropdown-content">
-        {#each menuOptions as option}
-            <div class="dropdown-item">
-            <span class="option-title" on:click={() => toggleCategory(option)}>
-                {option}
-            </span>
-            {#if expandedCategory === option}
-                {#each optionsToFeatures[option] as feature}
-                <a on:click={() => handleFeatureSelect(feature)}>
-                    {featureNameMap[feature]}
-                </a>
-                {/each}
-            {/if}
+    <div class="container">
+        <div class="sidebar">
+            <div class="dropdown">
+                <button class="dropbtn">Show me areas with</button>
+                <div class="dropdown-content">
+                    {#each menuOptions as option}
+                    <div class="dropdown-item">
+                        <span class="option-title" on:click={() => toggleCategory(option)}>
+                            {option}
+                        </span>
+                        {#if expandedCategory === option}
+                        {#each optionsToFeatures[option] as feature}
+                        <a on:click={() => handleFeatureSelect(feature)}>
+                            {featureNameMap[feature]}
+                        </a>
+                        {/each}
+                        {/if}
+                    </div>
+                    {/each}
+                </div>
             </div>
-        {/each}
+            <EvictionDashboard selectedValue={selectorValue} dictionary={featureNameMap}/>
+        </div>
+        <div class="map-container">
+            <Plot fname="map2.json" filter={(data, original) => {
+                if (data && data.length > 0) {
+                    if (selectorValue) {
+                        const filteredFeatures = original[0].geojson.features.filter(feature => feature.properties[selectorValue]);
+                        data[0].geojson.features = filteredFeatures;
+                    } else {
+                        data[0].geojson.features = original[0].geojson.features;
+                    }
+                }
+            }} />
         </div>
     </div>
-    <EvictionDashboard selectedValue={selectorValue}/>
-
     <hr class="blue"/>
 
     <h3>Conclusion</h3>
