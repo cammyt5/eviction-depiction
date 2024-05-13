@@ -79,7 +79,11 @@
         >
           <div class="table-header">
             <span>
-              {title}
+              {#if title === "Population"}
+                Metro Area Population (2020)
+              {:else}
+                {title}
+              {/if}
             </span>
 
             <span>

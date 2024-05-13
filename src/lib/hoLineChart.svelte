@@ -20,10 +20,8 @@
     }))
   );
 
-  console.log(data);
   data = data.filter((value) => value.Year > new Date(2007, 12));
 
-  console.log(data);
 
   $: {
     div?.firstChild?.remove(); // remove old chart, if any

@@ -60,8 +60,8 @@ data["corp_buy_rate"] = (
     + data["buyer_gse_ind_sum"]
     + data["buyer_trst_ind_sum"]
 ) / data["num_sales_transactions"]
-high_corp_buy_rate = data["corp_buy_rate"].nlargest(20)
-low_corp_buy_rate = data["corp_buy_rate"].nsmallest(20)
+data["high_corp_buy_rate"] = data["corp_buy_rate"].nlargest(20)
+data["low_corp_buy_rate"] = data["corp_buy_rate"].nsmallest(20)
 
 fig2 = px.scatter(
     data,
@@ -93,23 +93,23 @@ data["trst_buy_rate"] = data["buyer_trst_ind_sum"] / data["num_sales_transaction
 data["bus_buy_rate"] = data["buyer_bus_ind_sum"] / data["num_sales_transactions"]
 data["bnk_buy_rate"] = data["buyer_bnk_ind_sum"] / data["num_sales_transactions"]
 
-high_llc_buy_rate = data["llc_buy_rate"].nlargest(20)
-low_llc_buy_rate = data["llc_buy_rate"].nsmallest(20)
+data["high_llc_buy_rate"] = data["llc_buy_rate"].nlargest(20)
+data["low_llc_buy_rate"] = data["llc_buy_rate"].nsmallest(20)
 
-high_gov_buy_rate = data["gov_buy_rate"].nlargest(20)
-low_gov_buy_rate = data["gov_buy_rate"].nsmallest(20)
+data["high_gov_buy_rate"] = data["gov_buy_rate"].nlargest(20)
+data["low_gov_buy_rate"] = data["gov_buy_rate"].nsmallest(20)
 
-high_gse_buy_rate = data["gse_buy_rate"].nlargest(20)
-low_gse_buy_rate = data["gse_buy_rate"].nsmallest(20)
+data["high_gse_buy_rate"] = data["gse_buy_rate"].nlargest(20)
+data["low_gse_buy_rate"] = data["gse_buy_rate"].nsmallest(20)
 
-high_trst_buy_rate = data["trst_buy_rate"].nlargest(20)
-low_trst_buy_rate = data["trst_buy_rate"].nsmallest(20)
+data["high_trst_buy_rate"] = data["trst_buy_rate"].nlargest(20)
+data["low_trst_buy_rate"] = data["trst_buy_rate"].nsmallest(20)
 
-high_bus_buy_rate = data["bus_buy_rate"].nlargest(20)
-low_bus_buy_rate = data["bus_buy_rate"].nsmallest(20)
+data["high_bus_buy_rate"] = data["bus_buy_rate"].nlargest(20)
+data["low_bus_buy_rate"] = data["bus_buy_rate"].nsmallest(20)
 
-high_bnk_buy_rate = data["bnk_buy_rate"].nlargest(20)
-low_bnk_buy_rate = data["bnk_buy_rate"].nsmallest(20)
+data["high_bnk_buy_rate"] = data["bnk_buy_rate"].nlargest(20)
+data["low_bnk_buy_rate"] = data["bnk_buy_rate"].nsmallest(20)
 
 fig3s = [
     px.scatter(
@@ -159,16 +159,16 @@ data["institutional_investor_buy_rate"] = (
     data["sum_institutional_investor"] / data["total_investors"]
 )
 
-high_non_investor_buy_rate = data["non_investor_buy_rate"].nlargest(20)
-low_non_investor_buy_rate = data["non_investor_buy_rate"].nsmallest(20)
-high_small_investor_buy_rate = data["small_investor_buy_rate"].nlargest(20)
-low_small_investor_buy_rate = data["small_investor_buy_rate"].nsmallest(20)
-high_medium_investor_buy_rate = data["medium_investor_buy_rate"].nlargest(20)
-low_medium_investor_buy_rate = data["medium_investor_buy_rate"].nsmallest(20)
-high_large_investor_buy_rate = data["large_investor_buy_rate"].nlargest(20)
-low_large_investor_buy_rate = data["large_investor_buy_rate"].nsmallest(20)
-high_institutional_investor_buy_rate = data["institutional_investor_buy_rate"].nlargest(20)
-low_institutional_investor_buy_rate = data["institutional_investor_buy_rate"].nsmallest(20)
+data["high_non_investor_buy_rate"] = data["non_investor_buy_rate"].nlargest(20)
+data["low_non_investor_buy_rate"] = data["non_investor_buy_rate"].nsmallest(20)
+data["high_small_investor_buy_rate"] = data["small_investor_buy_rate"].nlargest(20)
+data["low_small_investor_buy_rate"] = data["small_investor_buy_rate"].nsmallest(20)
+data["high_medium_investor_buy_rate"] = data["medium_investor_buy_rate"].nlargest(20)
+data["low_medium_investor_buy_rate"] = data["medium_investor_buy_rate"].nsmallest(20)
+data["high_large_investor_buy_rate"] = data["large_investor_buy_rate"].nlargest(20)
+data["low_large_investor_buy_rate"] = data["large_investor_buy_rate"].nsmallest(20)
+data["high_institutional_investor_buy_rate"] = data["institutional_investor_buy_rate"].nlargest(20)
+data["low_institutional_investor_buy_rate"] = data["institutional_investor_buy_rate"].nsmallest(20)
 
 fig4s = [
     px.scatter(
@@ -259,7 +259,7 @@ for feature in neighborhoods["features"]:
             feature["properties"]["majority_black"] = True
         
         if hispanic_percentage >= 0.5:
-            feature["properties"]["majority_hisp"] = True
+            feature["properties"]["majority_hispanic"] = True
         
         mhi = feature["properties"]["mhi"]
         
@@ -271,40 +271,46 @@ for feature in neighborhoods["features"]:
         ### Corporation types
         num_transactions = feature["properties"]["num_sales_transactions"]
         llc_buy_rate = feature["properties"]["buyer_llc_ind_sum"] / num_transactions
-        if llc_buy_rate >= high_llc_buy_rate.min():
+        if llc_buy_rate >= data["high_llc_buy_rate"].min():
             feature["properties"]["high_llc_buy_rate"] = True
-        elif llc_buy_rate <= low_llc_buy_rate.max():
+        elif llc_buy_rate <= data["low_llc_buy_rate"].max():
             feature["properties"]["low_llc_buy_rate"] = True
 
         gov_buy_rate = feature["properties"]["buyer_gov_ind_sum"] / num_transactions
-        if gov_buy_rate >= high_gov_buy_rate.min():
+        if gov_buy_rate >= data["high_gov_buy_rate"].min():
             feature["properties"]["high_gov_buy_rate"] = True
-        elif gov_buy_rate <= low_gov_buy_rate.max():
+        elif gov_buy_rate <= data["low_gov_buy_rate"].max():
             feature["properties"]["low_gov_buy_rate"] = True
     
         gse_buy_rate = feature["properties"]["buyer_gse_ind_sum"] / num_transactions
-        if gse_buy_rate >= high_gse_buy_rate.min():
+        if gse_buy_rate >= data["high_gse_buy_rate"].min():
             feature["properties"]["high_gse_buy_rate"] = True
-        elif gse_buy_rate <= low_gse_buy_rate.values.max():
+        elif gse_buy_rate <= data["low_gse_buy_rate"].max():
             feature["properties"]["low_gse_buy_rate"] = True
         
         trst_buy_rate = feature["properties"]["buyer_trst_ind_sum"] / num_transactions
-        if trst_buy_rate >= high_trst_buy_rate.min():
+        if trst_buy_rate >= data["high_trst_buy_rate"].min():
             feature["properties"]["high_trst_buy_rate"] = True
-        elif trst_buy_rate <= low_trst_buy_rate.values.max():
+        elif trst_buy_rate <= data["low_trst_buy_rate"].max():
             feature["properties"]["low_trst_buy_rate"] = True
         
         bus_buy_rate = feature["properties"]["buyer_bus_ind_sum"] / num_transactions
-        if bus_buy_rate >= high_bus_buy_rate.min():
+        if bus_buy_rate >= data["high_bus_buy_rate"].min():
             feature["properties"]["high_bus_buy_rate"] = True
-        elif bus_buy_rate <= low_bus_buy_rate.values.max():
+        elif bus_buy_rate <= data["low_bus_buy_rate"].max():
             feature["properties"]["low_bus_buy_rate"] = True
         
         bnk_buy_rate = feature["properties"]["buyer_bnk_ind_sum"] / num_transactions
-        if bnk_buy_rate >= high_bnk_buy_rate.min():
+        if bnk_buy_rate >= data["high_bnk_buy_rate"].min():
             feature["properties"]["high_bnk_buy_rate"] = True
-        elif bnk_buy_rate <= low_bnk_buy_rate.values.max():
+        elif bnk_buy_rate <= data["low_bnk_buy_rate"].max():
             feature["properties"]["low_bnk_buy_rate"] = True
+
+        corp_buy_rate = llc_buy_rate + gov_buy_rate + gse_buy_rate + trst_buy_rate + bus_buy_rate + bnk_buy_rate
+        if corp_buy_rate >= data["high_corp_buy_rate"].min():
+            feature["properties"]["high_corp_buy_rate"] = True
+        if corp_buy_rate <= data["low_corp_buy_rate"].max():
+            feature["properties"]["low_corp_buy_rate"] = True
 
         ## Investment sizes
         total_investors = feature["properties"]["sum_non_investor"] + feature["properties"]["sum_small_investor"] + feature["properties"]["sum_medium_investor"] + feature["properties"]["sum_large_investor"] + feature["properties"]["sum_institutional_investor"]
@@ -314,29 +320,30 @@ for feature in neighborhoods["features"]:
         large_investor_buy_rate = feature["properties"]["sum_large_investor"] / total_investors
         institutional_investor_buy_rate = feature["properties"]["sum_institutional_investor"] / total_investors
 
-        if non_investor_buy_rate >= high_non_investor_buy_rate.min():
+
+        if non_investor_buy_rate >= data["high_non_investor_buy_rate"].min():
             feature["properties"]["high_non_investor_buy_rate"] = True
-        elif non_investor_buy_rate <= low_non_investor_buy_rate.max():
+        elif non_investor_buy_rate <= data["low_non_investor_buy_rate"].max():
             feature["properties"]["low_non_investor_buy_rate"] = True
         
-        if small_investor_buy_rate >= high_small_investor_buy_rate.min():
+        if small_investor_buy_rate >= data["high_small_investor_buy_rate"].min():
             feature["properties"]["high_small_investor_buy_rate"] = True
-        elif small_investor_buy_rate <= low_small_investor_buy_rate.max():
+        elif small_investor_buy_rate <= data["low_small_investor_buy_rate"].max():
             feature["properties"]["low_small_investor_buy_rate"] = True
 
-        if medium_investor_buy_rate >= high_medium_investor_buy_rate.min():
+        if medium_investor_buy_rate >= data["high_medium_investor_buy_rate"].min():
             feature["properties"]["high_medium_investor_buy_rate"] = True
-        elif medium_investor_buy_rate <= low_medium_investor_buy_rate.max():
+        elif medium_investor_buy_rate <= data["low_medium_investor_buy_rate"].max():
             feature["properties"]["low_medium_investor_buy_rate"] = True
 
-        if large_investor_buy_rate >= high_large_investor_buy_rate.min():
+        if large_investor_buy_rate >= data["high_large_investor_buy_rate"].min():
             feature["properties"]["high_large_investor_buy_rate"] = True
-        elif large_investor_buy_rate <= low_large_investor_buy_rate.max():
+        elif large_investor_buy_rate <= data["low_large_investor_buy_rate"].max():
             feature["properties"]["low_large_investor_buy_rate"] = True
 
-        if institutional_investor_buy_rate >= high_institutional_investor_buy_rate.min():
+        if institutional_investor_buy_rate >= data["high_institutional_investor_buy_rate"].min():
             feature["properties"]["high_institutional_investor_buy_rate"] = True
-        elif institutional_investor_buy_rate <= low_institutional_investor_buy_rate.max():
+        elif institutional_investor_buy_rate <= data["low_institutional_investor_buy_rate"].max():
             feature["properties"]["low_institutional_investor_buy_rate"] = True
 
 
@@ -368,3 +375,6 @@ fig2.update_traces(marker=dict(color='red'), selector=dict(type='choropleth', z=
 # Save the map to map2.json
 with open(f"{static_dir}/map2.json", "w") as f:
     f.write(fig2.to_json())
+
+with open(f"{static_dir}/data.json", "w") as f:
+    f.write(data.to_json())
