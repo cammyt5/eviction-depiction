@@ -57,6 +57,8 @@ fig1.update_layout(
     ),
     hoverlabel=dict(font_family="Times New Roman, Times, serif"),
 )
+fig1.update_xaxes(tickformat=",.0%")
+fig1.update_yaxes(tickformat=",.0%")
 with open(f"{static_dir}/fig1.json", "w") as f:
     f.write(fig1.to_json() or "")
 
@@ -96,6 +98,8 @@ fig2.update_layout(
 fig2.update_traces(
     hovertemplate="Eviction Rate: %{y:.2%}<br>Corporate Buy Rate: %{x:.2%}"
 )
+fig2.update_xaxes(tickformat=",.0%")
+fig2.update_yaxes(tickformat=",.0%")
 with open(f"{static_dir}/fig2.json", "w") as f:
     f.write(fig2.to_json() or "")
 
@@ -236,6 +240,8 @@ fig4.update_layout(
     xaxis_title="TEMP",
     hoverlabel=dict(font_family="Times New Roman, Times, serif"),
 )
+fig4.update_xaxes(tickformat=",.0%")
+fig4.update_yaxes(tickformat=",.0%")
 
 with open(f"{static_dir}/fig4.json", "w") as f:
     f.write(fig4.to_json() or "")
@@ -259,6 +265,7 @@ fig5.update_traces(
     hovertemplate="Eviction Rate: %{y:.2%}<br>Median Flip Horizon: %{x:.2s}"
 )
 fig5.update_xaxes(tickformat=".2s")
+fig5.update_yaxes(tickformat=",.0%")
 fig5.update_layout(
     font=dict(
         family="Times New Roman, Times, serif",
