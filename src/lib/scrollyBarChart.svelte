@@ -44,7 +44,7 @@
         "Renter Household Income in Majority Black Neighborhoods"
     ];
     let narrative = [
-        "The median national rent is $15,216 annually, or $1,268/month.",
+        "Nationally, average rent is $15,216 annually, or $1,268/month.",
         "In Boston, these figures rise to $23,772 annually, or $1,981/month.",
         "The average renter household earns $41,000 nationally, meaning rent costs 37.1% of earnings.",
         "In Boston, renter households make only $40,501 annually, meaning rent costs 58.7% of earnings.",

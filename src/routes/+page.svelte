@@ -249,6 +249,34 @@
     <div class="viz"><Plot fname="fig1.json" /></div>
 
     <p>That's because we're comparing apples to oranges: evictions happen at a distinct point in time, while the corporate ownership rate is the result of decades of compounded investment in an area. A better measure to compare against is the <em>corporate buy rate</em>, or the percentage of properties purchased by a business:</p>
+
+    <div class="viz"><Plot fname="fig2.json" /></div>
+
+    <hr class="blue"/>
+    <h3>Not All Corporations are Equal</h3>
+    <p>The term "corporate ownership" is an umbrella that covers a wide range of ownership scenarios: big banks, large companies, family businesses, live-in landlords, and even some cases of government ownership. As we consider each corporation type individually, how does the corrolation to eviction rates vary?</p>
+    <p>[DEFINE TYPES, STATE HIGHEST CORROLATION]</p>
+
+    <p>We can break down corporate purchases by investor "magnitude" and see that areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
+
+    <div class="viz" style="margin-bottom: 6em;">
+        <div style="height: 450px; width: 800px;">
+            {#key investment}
+            <Plot fname={["fig4a.json", "fig4b.json", "fig4c.json", "fig4d.json", "fig4e.json"][investment[0]]} />
+            {/key}
+        </div>
+        <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
+    </div>
+
+    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
+
+    <div class="viz"><Plot fname="fig5.json" /></div>
+ 
+    <hr class="yellow"/>
+
+    <h3>How Evictions Are Spatially Related to Corporate Activity (by Corporation Type) and Demographics</h3>
+
+    <p>TODO: update to reflect refactored dashboard - These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
     <Plot fname="map2.json" filter={(data, original) => {
         if (data && data.length > 0) {
             if (selectorValue) {
@@ -280,42 +308,8 @@
     </div>
     <EvictionDashboard selectedValue={selectorValue}/>
 
-    
-
-    <div class="viz"><Plot fname="fig2.json" /></div>
-
-    <p>These dynamics play out in geographically across Boston: areas of the city with high eviction rates also tend to have a higher corporate buy rate. Move the slider to filter neighborhoods by corporate buy rate - the higher the corporate buy rate, the more likely the neighborhood also has a high eviction rate.</p>
-
-    <div class="viz" style="margin-bottom: 6em;">
-        <Plot fname="map.json" filter={(data, original) => {
-            if (data && data.length > 0) {
-                data[0].geojson.features = original[0].geojson.features.filter(feature => feature.properties.eviction_rate < values[1] && feature.properties.eviction_rate > values[0]);
-            }
-        }}/>
-        <RangeSlider min={0} max={.2} step={.2/100} pipstep={.2} range pushy pips float first=label last=label bind:values={values} />
-    </div>
-
     <hr class="blue"/>
-    <h3>Not All Corporations are Equal</h3>
-    <p>The term "corporate ownership" is an umbrella that covers a wide range of ownership scenarios: big banks, large companies, family businesses, live-in landlords, and even some cases of government ownership. As we consider each corporation type individually, how does the corrolation to eviction rates vary?</p>
-    <p>[DEFINE TYPES, STATE HIGHEST CORROLATION]</p>
 
-    <p>We can break down corporate purchases by investor "magnitude" and see that areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
-
-    <div class="viz" style="margin-bottom: 6em;">
-        <div style="height: 450px; width: 800px;">
-            {#key investment}
-            <Plot fname={["fig4a.json", "fig4b.json", "fig4c.json", "fig4d.json", "fig4e.json"][investment[0]]} />
-            {/key}
-        </div>
-        <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
-    </div>
-
-    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher evictions.</p>
-
-    <div class="viz"><Plot fname="fig5.json" /></div>
- 
-    <hr class="yellow"/>
     <h3>Conclusion</h3>
     <p>Corporate ownership is part of the complex landscape of housing in Boston. When a higher percentage of rental properties are bought by corporations in a neighborhood, that neighborhood is more likely to have a high rate of evictions. However, these corporations are not all made equal: specifically, when there are more institutional investors, businesses making large investments, and house-flippers in a neighborhood, the eviction rate is more likely to be high. Small investors and non-investors are not tied to evictions in the same way.</p>
 
