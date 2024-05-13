@@ -45,6 +45,7 @@ fig1 = px.scatter(
         "corp_own_rate": "Corporate Ownership Rate (%)",
     },
 )
+fig1.update_traces(hovertemplate = 'Corporate Ownership Rate: %{x:.2%}<br>Eviction Rate: %{y:.2%}')
 with open(f"{static_dir}/fig1.json", "w") as f:
     f.write(fig1.to_json() or "")
 
@@ -367,4 +368,4 @@ fig2.update_traces(marker=dict(color='red'), selector=dict(type='choropleth', z=
 
 # Save the map to map2.json
 with open(f"{static_dir}/map2.json", "w") as f:
-    f.write(fig2.to_json())
+    f.write(fig2.to_json() or "")
