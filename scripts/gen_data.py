@@ -447,7 +447,7 @@ fig.add_trace(
         zmin=0,
         zmax=0.4,
         marker_opacity=0.5,
-        showlegend=False,
+        hovertemplate="Corporate Ownership Rate: %{z:0%}<extra></extra>",
     ),
     row=1,
     col=1,
@@ -463,7 +463,7 @@ fig.add_trace(
         showscale=False,
         zmin=0,
         marker_opacity=0.5,
-        showlegend=False,
+        hovertemplate="Corporate Ownership Rate: %{z:0%}<extra></extra>",
     ),
     row=1,
     col=2,
@@ -473,20 +473,19 @@ fig.update_mapboxes(
     center={"lat": 42.3166909, "lon": -71.0860779},
 )
 fig.update_layout(
-        margin=dict(l=0, r=0, t=50, b=10),
-            font=dict(
+    margin=dict(l=0, r=0, t=50, b=10),
+    font=dict(
         family="Times New Roman, Times, serif",
         # size=18,
-        color="black"
-    )
-        )
+        color="black",
+    ),
+    hoverlabel=dict(font_family="Times New Roman, Times, serif"),
+)
 
 fig.update_layout(
     mapbox1=dict(zoom=10, style="carto-positron"),
     mapbox2=dict(zoom=10, style="carto-positron"),
 )
-
-fig.show()
 
 with open(f"{static_dir}/map3.json", "w") as f:
     f.write(fig.to_json() or "")
