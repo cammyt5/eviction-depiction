@@ -172,8 +172,12 @@ data["high_medium_investor_buy_rate"] = data["medium_investor_buy_rate"].nlarges
 data["low_medium_investor_buy_rate"] = data["medium_investor_buy_rate"].nsmallest(20)
 data["high_large_investor_buy_rate"] = data["large_investor_buy_rate"].nlargest(20)
 data["low_large_investor_buy_rate"] = data["large_investor_buy_rate"].nsmallest(20)
-data["high_institutional_investor_buy_rate"] = data["institutional_investor_buy_rate"].nlargest(20)
-data["low_institutional_investor_buy_rate"] = data["institutional_investor_buy_rate"].nsmallest(20)
+data["high_institutional_investor_buy_rate"] = data[
+    "institutional_investor_buy_rate"
+].nlargest(20)
+data["low_institutional_investor_buy_rate"] = data[
+    "institutional_investor_buy_rate"
+].nsmallest(20)
 
 fig4s = [
     px.scatter(
@@ -267,7 +271,7 @@ for feature in neighborhoods["features"]:
 
         if hispanic_percentage >= 0.5:
             feature["properties"]["majority_hispanic"] = True
-        
+
         mhi = feature["properties"]["mhi"]
 
         if mhi in top_20_mhi.values:
@@ -313,7 +317,14 @@ for feature in neighborhoods["features"]:
         elif bnk_buy_rate <= data["low_bnk_buy_rate"].max():
             feature["properties"]["low_bnk_buy_rate"] = True
 
-        corp_buy_rate = llc_buy_rate + gov_buy_rate + gse_buy_rate + trst_buy_rate + bus_buy_rate + bnk_buy_rate
+        corp_buy_rate = (
+            llc_buy_rate
+            + gov_buy_rate
+            + gse_buy_rate
+            + trst_buy_rate
+            + bus_buy_rate
+            + bnk_buy_rate
+        )
         if corp_buy_rate >= data["high_corp_buy_rate"].min():
             feature["properties"]["high_corp_buy_rate"] = True
         if corp_buy_rate <= data["low_corp_buy_rate"].max():
@@ -341,12 +352,11 @@ for feature in neighborhoods["features"]:
             feature["properties"]["sum_institutional_investor"] / total_investors
         )
 
-
         if non_investor_buy_rate >= data["high_non_investor_buy_rate"].min():
             feature["properties"]["high_non_investor_buy_rate"] = True
         elif non_investor_buy_rate <= data["low_non_investor_buy_rate"].max():
             feature["properties"]["low_non_investor_buy_rate"] = True
-        
+
         if small_investor_buy_rate >= data["high_small_investor_buy_rate"].min():
             feature["properties"]["high_small_investor_buy_rate"] = True
         elif small_investor_buy_rate <= data["low_small_investor_buy_rate"].max():
@@ -362,9 +372,15 @@ for feature in neighborhoods["features"]:
         elif large_investor_buy_rate <= data["low_large_investor_buy_rate"].max():
             feature["properties"]["low_large_investor_buy_rate"] = True
 
-        if institutional_investor_buy_rate >= data["high_institutional_investor_buy_rate"].min():
+        if (
+            institutional_investor_buy_rate
+            >= data["high_institutional_investor_buy_rate"].min()
+        ):
             feature["properties"]["high_institutional_investor_buy_rate"] = True
-        elif institutional_investor_buy_rate <= data["low_institutional_investor_buy_rate"].max():
+        elif (
+            institutional_investor_buy_rate
+            <= data["low_institutional_investor_buy_rate"].max()
+        ):
             feature["properties"]["low_institutional_investor_buy_rate"] = True
 
 
@@ -411,7 +427,10 @@ corp_own_rates_over_time = pd.read_csv(
 fig = make_subplots(
     rows=1,
     cols=2,
-    subplot_titles=["Corporate Ownership Rate of<br>Boston Rentals (2004)", "Corporate Ownership Rate of<br>Boston Rentals (2024)"],
+    subplot_titles=[
+        "Corporate Ownership Rate of<br>Boston Rentals (2004)",
+        "Corporate Ownership Rate of<br>Boston Rentals (2024)",
+    ],
     specs=[[{"type": "mapbox"}, {"type": "mapbox"}]],
 )
 
@@ -453,12 +472,21 @@ fig.add_trace(
 fig.update_mapboxes(
     center={"lat": 42.3166909, "lon": -71.0860779},
 )
-fig.update_layout(margin=dict(l=0, r=0, t=50, b=10))
+fig.update_layout(
+        margin=dict(l=0, r=0, t=50, b=10),
+            font=dict(
+        family="Times New Roman, Times, serif",
+        # size=18,
+        color="black"
+    )
+        )
 
 fig.update_layout(
     mapbox1=dict(zoom=10, style="carto-positron"),
     mapbox2=dict(zoom=10, style="carto-positron"),
 )
+
+fig.show()
 
 with open(f"{static_dir}/map3.json", "w") as f:
     f.write(fig.to_json() or "")
