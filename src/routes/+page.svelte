@@ -245,9 +245,59 @@
         flex: 1;
         padding: 10px;
     }
+
+    /* Hidden by default */
+    .mobile-blocker {
+        display: none;
+    }
+
+    /* Show on mobile-sized screens */
+    @media (max-width: 1000px) {
+        .mobile-blocker {
+            display: flex;
+            position: fixed;
+            inset: 0; /* top: 0; right: 0; bottom: 0; left: 0 */
+            z-index: 9999;
+
+            background: #ffffff;
+            color: #000000;
+
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Optional: prevent scrolling of underlying content */
+        body {
+            overflow: hidden;
+        }
+    }
+
+    .mobile-blocker__content {
+        max-width: 400px;
+    }
+
+    .mobile-blocker h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .mobile-blocker p {
+        font-size: 1rem;
+        opacity: 0.8;
+    }
 </style>
 
 <body>
+
+    <div class="mobile-blocker">
+        <div class="mobile-blocker__content">
+            <h1>We made this site very quickly for a class.</h1>
+            <p>It's not mobile-friendly. Please view on desktop.</p>
+        </div>
+    </div>
+
     <hr class="blue"/><hr class="yellow"/>
     <h1>The LLC Next Door</h1>
     <h2><em>An analysis of corporate housing ownership (by corporation type) <br/>impacting eviction rates in Boston</em></h2>
@@ -256,9 +306,9 @@
 
     <p>Corporate homeownership has been increasing across the country, with large effects on eviction rates and housing costs in Boston. In this article, we'll break down:</p>
     <ul>
-        <li>how the corporate buy rate in Boston neighborhood often coorolates with higher eviction rates,</li>
-        <li>how a greater number of <em>large</em> investments in a neighborhood often coorolates with higher eviction rates,</li>
-        <li>how more property "flipping" corrolates with higher eviction rates,</li>
+        <li>how the corporate buy rate in Boston neighborhood often correlates with higher eviction rates,</li>
+        <li>how a greater number of <em>large</em> investments in a neighborhood often correlates with higher eviction rates,</li>
+        <li>how more property "flipping" correlates with higher eviction rates,</li>
         <li>and how many other corporation and demographic attributes relate to eviction rates across Boston, through an interactive dashboard.</li>
     </ul>
 
@@ -275,14 +325,14 @@
     <p>The housing crisis in Boston has developed in tandem with another major phenomenon: the rise in corporate ownership across the city.</p>
     <Plot fname="map3.json" />
 
-    <p>The concept of "corporate ownership" calls to mind an image of large, faceless corporation barreling into a neighborhood and evicting long-time residents just to jack up rent and maximize profit. Who are these "corporate owners," really? If we can show that corporate purchases are tied to evictions in Boston neighborhoods, we can make a case that corporate purchasing does not "spur economic growth" as these corporations may claim, but instead actively contributes to housing instability and unafforadability. Do all corporations have the same corrolation to evictions, or do some spur worse effects than others? In the remainder of this article, to examine the impact of corporations on each neighborhood, we will look specifically at the corrolation between corporate owners and evictions.</p>
+    <p>The concept of "corporate ownership" calls to mind an image of large, faceless corporation barreling into a neighborhood and evicting long-time residents just to jack up rent and maximize profit. Who are these "corporate owners," really? If we can show that corporate purchases are tied to evictions in Boston neighborhoods, we can make a case that corporate purchasing does not "spur economic growth" as these corporations may claim, but instead actively contributes to housing instability and unaffordability. Do all corporations have the same correlation to evictions, or do some spur worse effects than others? In the remainder of this article, to examine the impact of corporations on each neighborhood, we will look specifically at the correlation between corporate owners and evictions.</p>
 
     <hr class="yellow"/>
     <h3>Corporate Ownership ≠ Evictions</h3>
     <p>Let's investigate the link between corporate ownership and evictions in Boston using a dataset of Boston evictions between 2020-2023 on the <span class="tooltip">census tract level<span class="tooltiptext">Roughly neighborhood-sized chunks of the city.</span></span>.      <span style="color: gray;">← Hover over underlined text for a definition!</span></p>
     <p>First, we must define a few terms: in our analysis, we define the <em>eviction rate</em> in a given census tract to be the <em>annual number of evictions filed</em> divided by the <span class="tooltip"><em>renter population</em><span class="tooltiptext">Determined by multiplying the census tract population by one minus the tract's owner-occupancy rate.</span></span>.
         
-    <p>The natural first step is to compare the <em>corporate ownership rate</em> to the <em>eviction rate</em> in each census tracts. However, the resulting graph does demonstrate any obvious corrolation:</p>
+    <p>The natural first step is to compare the <em>corporate ownership rate</em> to the <em>eviction rate</em> in each census tracts. However, the resulting graph does demonstrate any obvious correlation:</p>
 
     <div class="viz"><Plot fname="fig1.json" /></div>
 
@@ -292,8 +342,8 @@
 
     <hr class="blue"/>
     <h3>Not All Corporations are Equal</h3>
-    <p>The term "corporate ownership" is an umbrella that covers a wide range of ownership scenarios: big banks, large companies, family businesses, live-in landlords, and even some cases of government ownership. As we consider each corporation type individually, how does the corrolation to eviction rates vary?</p>
-    <p>Neighborhoods with higher percentages of home purchases by <span class="tooltip">LLCs<span class="tooltiptext">Limited Liability Company - operators have personal liability protection and, unlike a corporation, aren't required to hire a board of directors or conduct meetings.</span></span> and <span class="tooltip">trusts<span class="tooltiptext">A legal arrangement to ensure assets go to specific beneficiaries.</span></span> see the highest corrolation with eviction rates. Eviction rates are also positively corrolated with banks, government buyers, and <span class="tooltip">GSEs<span class="tooltiptext">An entity established to facilitate the flow of credit to specific sectors of the economy. They are privately held, but provide public financial services. GSEs buy and sell mortgage loans.</span></span>, though often these purchases by these corporation types happen in the <span class="tooltip">aftermath of evictions<span class="tooltiptext">such as after foreclosures</span></span> and are not the root cause. Among the corporation types in our dataset, businesses had the lowest corrolation with eviction rates - likely because, unlike an LLC, business owners must be licensed and can be liable for the debts and obligations of the business and are less likely to get away with predatory practices.</p>
+    <p>The term "corporate ownership" is an umbrella that covers a wide range of ownership scenarios: big banks, large companies, family businesses, live-in landlords, and even some cases of government ownership. As we consider each corporation type individually, how does the correlation to eviction rates vary?</p>
+    <p>Neighborhoods with higher percentages of home purchases by <span class="tooltip">LLCs<span class="tooltiptext">Limited Liability Company - operators have personal liability protection and, unlike a corporation, aren't required to hire a board of directors or conduct meetings.</span></span> and <span class="tooltip">trusts<span class="tooltiptext">A legal arrangement to ensure assets go to specific beneficiaries.</span></span> see the highest correlation with eviction rates. Eviction rates are also positively correlated with banks, government buyers, and <span class="tooltip">GSEs<span class="tooltiptext">An entity established to facilitate the flow of credit to specific sectors of the economy. They are privately held, but provide public financial services. GSEs buy and sell mortgage loans.</span></span>, though often these purchases by these corporation types happen in the <span class="tooltip">aftermath of evictions<span class="tooltiptext">such as after foreclosures</span></span> and are not the root cause. Among the corporation types in our dataset, businesses had the lowest correlation with eviction rates - likely because, unlike an LLC, business owners must be licensed and can be liable for the debts and obligations of the business and are less likely to get away with predatory practices.</p>
     <p>However, the most interesting metric to visualize is corporate purchases broken down by investor "magnitude." Use the slider below to see how areas with high purchase rates by large investors and institutional investors also tend to have the highest eviction rates. In contrast, areas with high purchase rates by small investors and non-investors do not tend to have high eviction rates.</p>
 
     <div class="viz" style="margin-bottom: 6em;">
@@ -316,13 +366,13 @@
         <RangeSlider min={0} max={4} step={1} pipstep={1} pips float first=label last=label formatter={i => ["No Investment", "Small Investor", "Medium Investor", "Large Investor", "Institutional Investor"][i]} bind:values={investment} />
     </div>
 
-    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through rennovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon corrolates with higher rates of evictions.</p>
+    <p>Yet another way to consider differences between corporate owners is to analyze their intent. One practice that can be specifically disruptive is "flipping," or buying a property with the intention of quickly evicting any residents, adding value through renovations, and putting it back on market. If we consider how quickly the average property is bought and sold, the <em>flip horizon</em>, we see that a shorter flip horizon correlates with higher rates of evictions.</p>
 
     <div class="viz"><Plot fname="fig5.json" /></div>
  
     <hr class="yellow"/>
 
-    <h3>How Evictions Are Spatially Corrolated to Corporate Activity (by Corporation Type) and Demographics</h3>
+    <h3>How Evictions Are Spatially Correlated to Corporate Activity (by Corporation Type) and Demographics</h3>
 
     <p>Eviction dynamics play out geographically across Boston: areas of the city with a high corporate buy rate or high makeup of certain underserved demographics also tend to have high eviction rates. <b>Use the dropdown to see the top 20 census tracts for your chosen category to see how that category "lines up" with areas with high eviction rates.</b></p>
     <p style="color: gray;">Tip: Click a category name again to return to a view of all census tracts.</p>
